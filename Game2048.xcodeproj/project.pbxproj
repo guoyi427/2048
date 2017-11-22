@@ -14,6 +14,10 @@
 		5D8D878C1FC41BF700F8C518 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D878A1FC41BF700F8C518 /* LaunchScreen.storyboard */; };
 		5D8D87971FC41BF700F8C518 /* Game2048Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D87961FC41BF700F8C518 /* Game2048Tests.swift */; };
 		5D8D87A21FC41BF700F8C518 /* Game2048UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D87A11FC41BF700F8C518 /* Game2048UITests.swift */; };
+		5DA540FF1FC523C400EE4E9E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA540FE1FC523C400EE4E9E /* DataManager.swift */; };
+		5DA541011FC54C1900EE4E9E /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541001FC54C1900EE4E9E /* CellModel.swift */; };
+		5DA541031FC5594900EE4E9E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541021FC5594900EE4E9E /* Constant.swift */; };
+		5DA541051FC55CE700EE4E9E /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541041FC55CE700EE4E9E /* CellNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,10 @@
 		5D8D879D1FC41BF700F8C518 /* Game2048UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Game2048UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8D87A11FC41BF700F8C518 /* Game2048UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game2048UITests.swift; sourceTree = "<group>"; };
 		5D8D87A31FC41BF700F8C518 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5DA540FE1FC523C400EE4E9E /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		5DA541001FC54C1900EE4E9E /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
+		5DA541021FC5594900EE4E9E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		5DA541041FC55CE700EE4E9E /* CellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +105,10 @@
 		5D8D877A1FC41BF700F8C518 /* Game2048 */ = {
 			isa = PBXGroup;
 			children = (
+				5DA540FA1FC523B800EE4E9E /* Game */,
 				5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */,
 				5D8D87831FC41BF700F8C518 /* GameViewController.swift */,
+				5DA541021FC5594900EE4E9E /* Constant.swift */,
 				5D8D87851FC41BF700F8C518 /* Main.storyboard */,
 				5D8D87881FC41BF700F8C518 /* Assets.xcassets */,
 				5D8D878A1FC41BF700F8C518 /* LaunchScreen.storyboard */,
@@ -123,6 +133,40 @@
 				5D8D87A31FC41BF700F8C518 /* Info.plist */,
 			);
 			path = Game2048UITests;
+			sourceTree = "<group>";
+		};
+		5DA540FA1FC523B800EE4E9E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				5DA540FB1FC523B800EE4E9E /* Controller */,
+				5DA540FC1FC523B800EE4E9E /* Model */,
+				5DA540FD1FC523B800EE4E9E /* View */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		5DA540FB1FC523B800EE4E9E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5DA540FC1FC523B800EE4E9E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5DA540FE1FC523C400EE4E9E /* DataManager.swift */,
+				5DA541001FC54C1900EE4E9E /* CellModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5DA540FD1FC523B800EE4E9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5DA541041FC55CE700EE4E9E /* CellNode.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,7 +304,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D8D87841FC41BF700F8C518 /* GameViewController.swift in Sources */,
+				5DA540FF1FC523C400EE4E9E /* DataManager.swift in Sources */,
+				5DA541031FC5594900EE4E9E /* Constant.swift in Sources */,
 				5D8D877C1FC41BF700F8C518 /* AppDelegate.swift in Sources */,
+				5DA541011FC54C1900EE4E9E /* CellModel.swift in Sources */,
+				5DA541051FC55CE700EE4E9E /* CellNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
