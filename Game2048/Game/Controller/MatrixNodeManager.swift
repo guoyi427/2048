@@ -91,9 +91,8 @@ extension MatrixNodeManager {
         _matrixNode = SKShapeNode(rect: rect, cornerRadius: CornerRadius_Cell)
         guard let newNode = _matrixNode else { return SKShapeNode() }
         newNode.fillColor = SKColor.white
-        newNode.strokeColor = SKColor.black
+        newNode.strokeColor = SKColor.white
         prepareChildNode()
-        
         
         return newNode
     }
