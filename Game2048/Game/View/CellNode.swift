@@ -8,6 +8,8 @@
 
 import SpriteKit
 
+let CornerRadius_Cell: CGFloat = 5
+
 class CellNode: SKNode {
     
     fileprivate let _labelNode = SKLabelNode()
@@ -15,7 +17,7 @@ class CellNode: SKNode {
     init(number: Int, size: CGSize) {
         super.init()
         
-        let backgroundNode = SKShapeNode(rectOf: size, cornerRadius: 5)
+        let backgroundNode = SKShapeNode(rectOf: size, cornerRadius: CornerRadius_Cell)
         backgroundNode.fillColor = YellowColor
         backgroundNode.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(backgroundNode)

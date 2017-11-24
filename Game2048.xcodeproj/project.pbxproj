@@ -18,6 +18,7 @@
 		5DA541011FC54C1900EE4E9E /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541001FC54C1900EE4E9E /* CellModel.swift */; };
 		5DA541031FC5594900EE4E9E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541021FC5594900EE4E9E /* Constant.swift */; };
 		5DA541051FC55CE700EE4E9E /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541041FC55CE700EE4E9E /* CellNode.swift */; };
+		5DF91B981FC80B5100F30A12 /* MatrixNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91B971FC80B5100F30A12 /* MatrixNodeManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		5DA541001FC54C1900EE4E9E /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 		5DA541021FC5594900EE4E9E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		5DA541041FC55CE700EE4E9E /* CellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
+		5DF91B971FC80B5100F30A12 /* MatrixNodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixNodeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 		5DA540FB1FC523B800EE4E9E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5DF91B971FC80B5100F30A12 /* MatrixNodeManager.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				5D8D87841FC41BF700F8C518 /* GameViewController.swift in Sources */,
 				5DA540FF1FC523C400EE4E9E /* DataManager.swift in Sources */,
 				5DA541031FC5594900EE4E9E /* Constant.swift in Sources */,
+				5DF91B981FC80B5100F30A12 /* MatrixNodeManager.swift in Sources */,
 				5D8D877C1FC41BF700F8C518 /* AppDelegate.swift in Sources */,
 				5DA541011FC54C1900EE4E9E /* CellModel.swift in Sources */,
 				5DA541051FC55CE700EE4E9E /* CellNode.swift in Sources */,
