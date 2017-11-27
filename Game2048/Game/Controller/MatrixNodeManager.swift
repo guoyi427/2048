@@ -298,6 +298,8 @@ extension MatrixNodeManager {
         
         if doSomething {
             addCellNode(model: DataManager.shared.addCellModel())
+            //  保存数据到缓存
+            DataManager.shared.saveModelList()
         }
     }
 }

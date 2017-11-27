@@ -13,6 +13,7 @@ class DataManager: NSObject {
     
     /// 默认尺寸 6x6 用于限制2048的规格
     var size = CGSize(width: 6, height: 6)
+    
     /// cell显示的文字数组，根据cell.number作为数组下标获取cell对应的文字
     var titleList: [String] = {
         var list: [String] = []
@@ -23,6 +24,7 @@ class DataManager: NSObject {
         }
         return list
     }()
+    
     /// 当前所有cell的二维数组，包含number=0的model
     var currentModelList: [[CellModel]] = {
         var list: [[CellModel]] = []
@@ -37,9 +39,15 @@ class DataManager: NSObject {
         return list
     }()
     
+    /// 历史数据
+    var historyModelList: [[[Int]]] = []
+    
+    
+    
     override init() {
         super.init()
         
+        queryHistory()
     }
 }
 
@@ -52,23 +60,69 @@ extension DataManager {
         emptyModel.number = number
         return emptyModel
     }
+    
+    /// 保存数据到缓存中
+    func saveModelList() {
+        //  将记录保存到本地
+        var sectionList: [[Int]] = []
+        DataManager.shared.currentModelList.forEach({ (list) in
+            var numberList: [Int] = []
+            list.forEach({ (model) in
+                numberList.append(model.number)
+            })
+            sectionList.append(numberList)
+        })
+        
+        historyModelList.append(sectionList)
+        
+        saveToFile()
+    }
+    
+    /// 保存到本地
+    func saveToFile() {
+        if historyModelList.count > 0 {
+            var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+            if path == nil {
+                return
+            }
+            path!.append("/history.archive")
+            NSKeyedArchiver.archiveRootObject(historyModelList, toFile: path!)
+        }
+    }
+    
+    func queryHistory() {
+        var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+        if path == nil {
+            return
+        }
+        path!.append("/history.archive")
+        
+        if let data = NSKeyedUnarchiver.unarchiveObject(withFile: path!) as? [[[Int]]] {
+            historyModelList = data
+            debugPrint(historyModelList)
+            
+            if historyModelList.count > 0 {
+                var sectionList: [[CellModel]] = []
+                if let list: [[Int]] = historyModelList.last {
+                    var modelList: [CellModel] = []
+                    list.forEach({ (numberList) in
+                        numberList.forEach({ (number) in
+                            let model = CellModel(number: number)
+                            modelList.append(model)
+                        })
+                        sectionList.append(modelList)
+                    })
+//                    currentModelList = sectionList
+                }
+            }
+        }
+    }
 }
 
 // MARK: - Private - Methods
 extension DataManager {
     /// 随机返回当前所有cellModel中number = 0的那个
     fileprivate func emptyModelWithCurrentModelList() -> CellModel {
-        /*
-        let randomColumn = Int(arc4random_uniform(UInt32(size.height)))
-        let randomRow = Int(arc4random_uniform(UInt32(size.width)))
-        let model = currentModelList[randomColumn][randomRow]
-        if model.number != 0 {
-            return emptyModelWithCurrentModelList()
-        } else {
-            return model
-        } //  这种随机方法对于number=0占大多数的情况效率高，但当number=0个数较少时效率较低，下面这种方法相反
-        */
-        
         //  获取所有number = 0的model
         var emptyNumberList: [CellModel] = []
         for column in 0...currentModelList.count - 1 {
