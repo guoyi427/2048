@@ -31,6 +31,7 @@ class CellNode: SKNode {
         
         _labelNode.fontColor = BlackColor
         _labelNode.fontSize = 30
+        _labelNode.fontName = TitleFontName
         _labelNode.verticalAlignmentMode = .center
         _labelNode.position = CGPoint(x: _backgroundNode!.frame.midX, y: _backgroundNode!.frame.midY)
         addChild(_labelNode)

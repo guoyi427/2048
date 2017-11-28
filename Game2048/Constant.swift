@@ -12,8 +12,11 @@ let ScreenSize = UIScreen.main.bounds.size
 let ScreenWidth = UIScreen.main.bounds.width
 let ScreenHeight = UIScreen.main.bounds.height
 
-let YellowColor = UIColor(red: 0.3, green: 0.4, blue: 0, alpha: 1)
+let YellowColor = UIColor(red: 0.8, green: 0.8, blue: 0, alpha: 1)
 let BlackColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+
+let TitleFontName = "AvenirNext-Bold"
+
 
 class Constant: NSObject {
     

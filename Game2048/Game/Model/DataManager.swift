@@ -74,8 +74,6 @@ extension DataManager {
         })
         
         historyModelList.append(sectionList)
-        
-        saveToFile()
     }
     
     /// 保存到本地
