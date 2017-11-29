@@ -42,6 +42,7 @@ class MatrixNodeManager: NSObject {
 
 // MARK: - Private - Methods
 extension MatrixNodeManager {
+    /// 移动单元格
     fileprivate func moveCellNode(column: Int, row: Int, node: CellNode) {
         let cellWidth = (ScreenWidth - Padding * 2) / DataManager.shared.size.width
         let point = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column))
@@ -55,6 +56,7 @@ extension MatrixNodeManager {
         removeCellNodel(column: column, row: row, newNode: node)
     }
     
+    /// 移除单元格
     fileprivate func removeCellNodel(column: Int, row: Int, newNode: CellNode) {
         _cellNodeList[column][row] = newNode
     }
@@ -123,6 +125,7 @@ extension MatrixNodeManager {
                             node.updateNumber(number: currentNumber)
                             
                             DataManager.shared.currentModelList[column][lastIndex].number = currentNumber
+                            DataManager.shared.addScore(number: currentNumber)
                             
                             lastNumber = model.number
                             doSomething = true
@@ -172,6 +175,7 @@ extension MatrixNodeManager {
                             node.updateNumber(number: currentNumber)
                             
                             DataManager.shared.currentModelList[column][lastIndex].number = currentNumber
+                            DataManager.shared.addScore(number: currentNumber)
                             
                             lastNumber = model.number
                             doSomething = true
@@ -219,6 +223,7 @@ extension MatrixNodeManager {
                             node.updateNumber(number: currentNumber)
                             
                             DataManager.shared.currentModelList[lastIndex][row].number = currentNumber
+                            DataManager.shared.addScore(number: currentNumber)
                             
                             lastNumber = model.number
                             doSomething = true
@@ -266,6 +271,7 @@ extension MatrixNodeManager {
                             node.updateNumber(number: currentNumber)
                             
                             DataManager.shared.currentModelList[lastIndex][row].number = currentNumber
+                            DataManager.shared.addScore(number: currentNumber)
                             
                             lastNumber = model.number
                             doSomething = true
@@ -300,6 +306,36 @@ extension MatrixNodeManager {
             addCellNode(model: DataManager.shared.addCellModel())
             //  保存数据到缓存
             DataManager.shared.saveModelList()
+        }
+    }
+    
+    /// 根据 DataManager的currentModelList 刷新页面
+    func upload() {
+        //  移除老的
+        for nodeList in _cellNodeList {
+            for node in nodeList {
+                node.removeFromParent()
+            }
+        }
+        _cellNodeList.removeAll()
+        _cellNodeList = [[],[],[],[],[],[]]
+        
+        let cellWidth = (ScreenWidth - Padding * 2) / DataManager.shared.size.width
+        
+        //  创建新的
+        for column in 0...DataManager.shared.currentModelList.count - 1 {
+            let modelList = DataManager.shared.currentModelList[column]
+            var cellList: [CellNode] = []
+            for row in 0...modelList.count - 1 {
+                let model = modelList[row]
+                let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
+                node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column))
+                if model.number > 0 {
+                    _matrixNode!.addChild(node)
+                }
+                cellList.append(node)
+            }
+            _cellNodeList[column] = cellList
         }
     }
 }

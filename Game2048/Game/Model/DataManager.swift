@@ -8,6 +8,9 @@
 
 import UIKit
 
+let Key_CurrentScore = "currentScore"
+let Key_MaxScore = "maxScore"
+
 class DataManager: NSObject {
     static let shared: DataManager = DataManager()
     
@@ -42,12 +45,16 @@ class DataManager: NSObject {
     /// 历史数据
     var historyModelList: [[[Int]]] = []
     
+    /// 总共得分    得分规则，合成几就加几分
+    var currentScore: Int = 0
+    /// 最高分数
+    var maxScore: Int = 0
+    
     
     
     override init() {
         super.init()
         
-        queryHistory()
     }
 }
 
@@ -78,16 +85,32 @@ extension DataManager {
     
     /// 保存到本地
     func saveToFile() {
+        //  保存记录
         if historyModelList.count > 0 {
+            //  保存最后10个记录
+            var saveList:[[[Int]]] = []
+            let count = historyModelList.count
+            for index in 0...9 {
+                if count - index > 0 {
+                    saveList.append(historyModelList[count-9+index-1])
+                } else {
+                    break
+                }
+            }
+            
             var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
             if path == nil {
                 return
             }
             path!.append("/history.archive")
-            NSKeyedArchiver.archiveRootObject(historyModelList, toFile: path!)
+            NSKeyedArchiver.archiveRootObject(saveList, toFile: path!)
         }
+        //  保存分数
+        UserDefaults.standard.setValue(currentScore, forKey: Key_CurrentScore)
+        UserDefaults.standard.setValue(maxScore, forKey: Key_MaxScore)
     }
     
+    /// 查询历史
     func queryHistory() {
         var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
         if path == nil {
@@ -102,17 +125,56 @@ extension DataManager {
             if historyModelList.count > 0 {
                 var sectionList: [[CellModel]] = []
                 if let list: [[Int]] = historyModelList.last {
-                    var modelList: [CellModel] = []
                     list.forEach({ (numberList) in
+                        var modelList: [CellModel] = []
                         numberList.forEach({ (number) in
                             let model = CellModel(number: number)
                             modelList.append(model)
                         })
                         sectionList.append(modelList)
                     })
-//                    currentModelList = sectionList
+                    currentModelList = sectionList
                 }
             }
+        }
+        //  获取当前分数 和 最大分数
+        if let score = UserDefaults.standard.value(forKey: Key_CurrentScore) as? Int  {
+            currentScore = score
+        }
+        
+        if let score = UserDefaults.standard.value(forKey: Key_MaxScore) as? Int {
+            maxScore = score
+        }
+    }
+    
+    /// 返回上一步
+    func undo() {
+        if historyModelList.count < 2 {
+            //  无可显示历史
+            return
+        }
+
+        let numberSet = historyModelList[historyModelList.count - 2]
+        var modelSet: [[CellModel]] = []
+        for numberList in numberSet {
+            var modelList: [CellModel] = []
+            for number in numberList {
+                let model = CellModel(number: number)
+                modelList.append(model)
+            }
+            modelSet.append(modelList)
+        }
+        
+        //  更新成最后一组数据
+        currentModelList = modelSet
+        historyModelList.removeLast()
+        currentScore -= 100
+    }
+    
+    func addScore(number: Int) {
+        currentScore += Int(truncating: pow(2, number) as NSDecimalNumber)
+        if currentScore > maxScore {
+            maxScore = currentScore
         }
     }
 }

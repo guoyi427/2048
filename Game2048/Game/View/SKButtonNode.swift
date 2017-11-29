@@ -13,11 +13,30 @@ class SKButtonNode: SKShapeNode {
     var target: AnyObject?
     var selector: Selector?
     
-
+    fileprivate let _titleLabel = SKLabelNode(text: "")
+    
+    override init() {
+        super.init()
+        _titleLabel.fontSize = 14
+        addChild(_titleLabel)
+    }
+    
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func addTarget(target : AnyObject, selector: Selector) {
         self.target = target
         self.selector = selector
         self.isUserInteractionEnabled = true
+    }
+    
+    func updateTitle(text: String) {
+        _titleLabel.position = CGPoint(x: position.x + frame.midX, y: position.y + frame.midY)
+        _titleLabel.verticalAlignmentMode = .center
+        _titleLabel.text = text
     }
 }
 
