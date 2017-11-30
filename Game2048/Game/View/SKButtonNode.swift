@@ -18,6 +18,8 @@ class SKButtonNode: SKShapeNode {
     override init() {
         super.init()
         _titleLabel.fontSize = 14
+        _titleLabel.verticalAlignmentMode = .center
+        _titleLabel.fontColor = SKColor.white
         addChild(_titleLabel)
     }
     
@@ -34,9 +36,8 @@ class SKButtonNode: SKShapeNode {
     }
     
     func updateTitle(text: String) {
-        _titleLabel.position = CGPoint(x: position.x + frame.midX, y: position.y + frame.midY)
-        _titleLabel.verticalAlignmentMode = .center
         _titleLabel.text = text
+        _titleLabel.position = CGPoint(x: position.x + frame.midX, y: position.y + frame.midY)
     }
 }
 

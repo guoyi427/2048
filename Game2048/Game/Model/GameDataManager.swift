@@ -1,5 +1,5 @@
 //
-//  DataManager.swift
+//  GameDataManager.swift
 //  Game2048
 //
 //  Created by kokozu on 22/11/2017.
@@ -11,8 +11,8 @@ import UIKit
 let Key_CurrentScore = "currentScore"
 let Key_MaxScore = "maxScore"
 
-class DataManager: NSObject {
-    static let shared: DataManager = DataManager()
+class GameDataManager: NSObject {
+    static let shared: GameDataManager = GameDataManager()
     
     /// 默认尺寸 6x6 用于限制2048的规格
     var size = CGSize(width: 6, height: 6)
@@ -59,7 +59,7 @@ class DataManager: NSObject {
 }
 
 // MARK: - Public - Methods
-extension DataManager {
+extension GameDataManager {
     /// 随机位置 给一个number=0的 cellmodel赋值 1或者2
     func addCellModel() -> CellModel {
         let emptyModel = emptyModelWithCurrentModelList()
@@ -72,7 +72,7 @@ extension DataManager {
     func saveModelList() {
         //  将记录保存到本地
         var sectionList: [[Int]] = []
-        DataManager.shared.currentModelList.forEach({ (list) in
+        GameDataManager.shared.currentModelList.forEach({ (list) in
             var numberList: [Int] = []
             list.forEach({ (model) in
                 numberList.append(model.number)
@@ -109,7 +109,10 @@ extension DataManager {
         }
         //  保存分数
         UserDefaults.standard.setValue(currentScore, forKey: Key_CurrentScore)
-        UserDefaults.standard.setValue(maxScore, forKey: Key_MaxScore)
+        let maxLocal = UserDefaults.standard.value(forKey: Key_MaxScore) as? Int ?? 0
+        if maxScore > maxLocal {
+            UserDefaults.standard.setValue(maxScore, forKey: Key_MaxScore)
+        }
     }
     
     /// 查询历史
@@ -173,6 +176,27 @@ extension DataManager {
         currentScore -= 100
     }
     
+    /// 重新开始
+    func restart() {
+        currentModelList.removeAll()
+        historyModelList.removeAll()
+        currentScore = 0
+        for _ in 0...5 {
+            var modelList: [CellModel] = []
+            for _ in 0...5 {
+                let model = CellModel(number: 0)
+                modelList.append(model)
+            }
+            currentModelList.append(modelList)
+        }
+        
+        _ = addCellModel()
+        _ = addCellModel()
+        saveModelList()
+        saveToFile()
+    }
+    
+    /// 加分
     func addScore(number: Int) {
         currentScore += Int(truncating: pow(2, number) as NSDecimalNumber)
         if currentScore > maxScore {
@@ -182,7 +206,7 @@ extension DataManager {
 }
 
 // MARK: - Private - Methods
-extension DataManager {
+extension GameDataManager {
     /// 随机返回当前所有cellModel中number = 0的那个
     fileprivate func emptyModelWithCurrentModelList() -> CellModel {
         //  获取所有number = 0的model

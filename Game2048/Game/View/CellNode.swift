@@ -92,12 +92,12 @@ extension CellNode {
 // MARK: - Public - Methods
 extension CellNode {
     func updateNumber(number: Int) {
-        if number == 0 || number > DataManager.shared.titleList.count {
+        if number == 0 || number > GameDataManager.shared.titleList.count {
             _labelNode.text = ""
             return
         }
     
-        _labelNode.text = DataManager.shared.titleList[number-1]
+        _labelNode.text = GameDataManager.shared.titleList[number-1]
         
         //  更新label的字号
         let count = _labelNode.text!.count

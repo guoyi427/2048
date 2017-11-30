@@ -37,7 +37,7 @@ class GameViewController: UIViewController {
         }
         
         uploadView()
-        debugPrint(DataManager.shared.titleList)
+        debugPrint(GameDataManager.shared.titleList)
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -91,7 +91,7 @@ extension GameViewController {
         
         //  撤销按钮
         let undoButton = SKButtonNode(rect: CGRect(x: currentView.frame.minX, y: currentView.frame.minY - 50, width: currentView.frame.width, height: 35), cornerRadius: 3)
-        undoButton.fillColor = YellowColor
+        undoButton.fillColor = BrownColor
         undoButton.updateTitle(text: "撤销")
         undoButton.addTarget(target: self, selector: #selector(undoButtonAction(sender:)))
         headNode.addChild(undoButton)
@@ -112,6 +112,14 @@ extension GameViewController {
         _maxScoreLabel.fontName = TitleFontName
         _maxScoreLabel.position = CGPoint(x: maxView.frame.minX + width_score/2, y: maxView.frame.minY + height_score/2 - 10)
         maxView.addChild(_maxScoreLabel)
+        
+        //  重新开始按钮
+        let restartButton = SKButtonNode(rect: CGRect(x: maxView.frame.minX, y: maxView.frame.minY - 50, width: maxView.frame.width, height: 35),
+                                         cornerRadius: 3)
+        restartButton.fillColor = BrownColor
+        restartButton.updateTitle(text: "重新开始")
+        restartButton.addTarget(target: self, selector: #selector(restartButtonAction(sender:)))
+        headNode.addChild(restartButton)
     }
     
     /// 准备矩阵视图
@@ -125,10 +133,10 @@ extension GameViewController {
 extension GameViewController {
     fileprivate func uploadView() {
         //  刷新页面
-        DataManager.shared.queryHistory()
+        GameDataManager.shared.queryHistory()
         MatrixNodeManager.shared.upload()
-        _currentScoreLabel.text = "\(DataManager.shared.currentScore)"
-        _maxScoreLabel.text = "\(DataManager.shared.maxScore)"
+        _currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
+        _maxScoreLabel.text = "\(GameDataManager.shared.maxScore)"
     }
 }
 
@@ -138,12 +146,12 @@ extension GameViewController {
     @objc fileprivate func swipeViewGestureRecognizerAction(sender: UISwipeGestureRecognizer) {
         MatrixNodeManager.shared.swipeGestureRecognizerAction(direction: sender.direction)
         //  更新分数
-        _currentScoreLabel.text = "\(DataManager.shared.currentScore)"
-        _maxScoreLabel.text = "\(DataManager.shared.maxScore)"
+        _currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
+        _maxScoreLabel.text = "\(GameDataManager.shared.maxScore)"
         
         //  每执行50次 自动保存一次，除此之外退到后台会自动保存一次
         if _swipeCountBeforeSave >= 50 {
-            DataManager.shared.saveToFile()
+            GameDataManager.shared.saveToFile()
             _swipeCountBeforeSave = 0
         }
         _swipeCountBeforeSave += 1
@@ -151,9 +159,25 @@ extension GameViewController {
  
     /// 撤销按钮 返回上一步
     @objc fileprivate func undoButtonAction(sender: SKButtonNode) {
-        DataManager.shared.undo()
+        GameDataManager.shared.undo()
         //  刷新页面
         MatrixNodeManager.shared.upload()
-        _currentScoreLabel.text = "\(DataManager.shared.currentScore)"
+        _currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
+    }
+
+    /// 重新开始
+    @objc fileprivate func restartButtonAction(sender: SKButtonNode) {
+        let doneAction = UIAlertAction(title: "确定", style: .default) { [weak self] (action) in
+            GameDataManager.shared.restart()
+            MatrixNodeManager.shared.upload()
+            guard let weakSelf = self else { return }
+            weakSelf._currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
+            weakSelf._maxScoreLabel.text = "\(GameDataManager.shared.maxScore)"
+        }
+        let cancelAtion = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let alert = UIAlertController(title: "重新开始", message: "将会删除现在的所有记录", preferredStyle: .alert)
+        alert.addAction(doneAction)
+        alert.addAction(cancelAtion)
+        present(alert, animated: true, completion: nil)
     }
 }

@@ -14,6 +14,7 @@ let ScreenHeight = UIScreen.main.bounds.height
 
 let YellowColor = UIColor(red: 0.8, green: 0.8, blue: 0, alpha: 1)
 let BlackColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+let BrownColor = UIColor.brown
 
 let TitleFontName = "AvenirNext-Bold"
 
