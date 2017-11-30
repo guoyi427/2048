@@ -89,10 +89,12 @@ extension DataManager {
         if historyModelList.count > 0 {
             //  保存最后10个记录
             var saveList:[[[Int]]] = []
-            let count = historyModelList.count
-            for index in 0...9 {
-                if count - index > 0 {
-                    saveList.append(historyModelList[count-9+index-1])
+            var list = historyModelList
+            
+            for _ in 0...9 {
+                if list.count > 0 {
+                    saveList.insert(list.last!, at: 0)
+                    list.removeLast()
                 } else {
                     break
                 }

@@ -14,20 +14,15 @@ class CellNode: SKNode {
     
     fileprivate let _labelNode = SKLabelNode()
     fileprivate var _backgroundNode: SKShapeNode?
+    fileprivate var _cellWidth: CGFloat = ScreenWidth / 6
     
     init(number: Int, size: CGSize) {
         super.init()
         
+        _cellWidth = size.width
         _backgroundNode = SKShapeNode(rectOf: size, cornerRadius: CornerRadius_Cell)
         _backgroundNode!.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(_backgroundNode!)
-        updateColor(number: number)
-        
-        if number == 0 {
-            _labelNode.text = ""
-        } else {
-            _labelNode.text = DataManager.shared.titleList[number-1]
-        }
         
         _labelNode.fontColor = BlackColor
         _labelNode.fontSize = 30
@@ -35,6 +30,7 @@ class CellNode: SKNode {
         _labelNode.verticalAlignmentMode = .center
         _labelNode.position = CGPoint(x: _backgroundNode!.frame.midX, y: _backgroundNode!.frame.midY)
         addChild(_labelNode)
+        updateNumber(number: number)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -85,15 +81,29 @@ extension CellNode {
             break
         }
         
-        let textColor = SKColor(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1)
-        _backgroundNode!.fillColor = textColor
+        let bgColor = SKColor(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1)
+        _backgroundNode!.fillColor = bgColor
+        
+        let textColor = SKColor(red: (255-red)/255.0, green: (255-green)/255.0, blue: (255-blue)/255.0, alpha: 1)
+        _labelNode.fontColor = textColor
     }
 }
 
 // MARK: - Public - Methods
 extension CellNode {
     func updateNumber(number: Int) {
+        if number == 0 || number > DataManager.shared.titleList.count {
+            _labelNode.text = ""
+            return
+        }
+    
         _labelNode.text = DataManager.shared.titleList[number-1]
+        
+        //  更新label的字号
+        let count = _labelNode.text!.count
+        let fontSize = (_cellWidth + 20)/CGFloat(count)
+        _labelNode.fontSize = CGFloat(fontSize)
+        //  更新背景颜色
         updateColor(number: number)
     }
 }
