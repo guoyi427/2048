@@ -26,6 +26,8 @@ class MatrixNodeManager: NSObject {
     
     fileprivate func prepareChildNode() {
         
+        let cellWidth = ScreenWidth / GameDataManager.shared.size.width
+        
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
             let modelList = GameDataManager.shared.currentModelList[column]
             var cellList: [CellNode] = []
@@ -33,8 +35,16 @@ class MatrixNodeManager: NSObject {
                 cellList.append(CellNode(number: 0, size: CGSize.zero))
             }
             _cellNodeList[column] = cellList
+            
+            //  添加网格分割线
+            let pathToLine = CGMutablePath()
+            pathToLine.move(to: CGPoint(x: cellWidth * CGFloat(column) + 1, y: 0))
+            pathToLine.addLine(to: CGPoint(x: cellWidth * CGFloat(column) + 1, y: _matrixNode!.frame.height))
+            let verLine = SKShapeNode(path: pathToLine)
+            _matrixNode?.addChild(verLine)
         }
         
+        //  添加滑块儿
         addCellNode(model: GameDataManager.shared.addCellModel())
         addCellNode(model: GameDataManager.shared.addCellModel())
     }
