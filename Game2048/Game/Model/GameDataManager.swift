@@ -63,7 +63,7 @@ extension GameDataManager {
     /// 随机位置 给一个number=0的 cellmodel赋值 1或者2
     func addCellModel() -> CellModel {
         let emptyModel = emptyModelWithCurrentModelList()
-        let number = Int(arc4random_uniform(3)%2+1)
+        let number = arc4random_uniform(4)==3 ? 2 : 1
         emptyModel.number = number
         return emptyModel
     }
