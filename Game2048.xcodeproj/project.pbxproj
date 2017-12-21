@@ -19,7 +19,9 @@
 		5DA541011FC54C1900EE4E9E /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541001FC54C1900EE4E9E /* CellModel.swift */; };
 		5DA541031FC5594900EE4E9E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541021FC5594900EE4E9E /* Constant.swift */; };
 		5DA541051FC55CE700EE4E9E /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA541041FC55CE700EE4E9E /* CellNode.swift */; };
+		5DB2A95E1FEB8421006C2436 /* AdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2A95D1FEB8421006C2436 /* AdsManager.swift */; };
 		5DF91B981FC80B5100F30A12 /* MatrixNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF91B971FC80B5100F30A12 /* MatrixNodeManager.swift */; };
+		8E4FB1ED3FAB58E369F7FEF2 /* Pods_Game2048.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B35B110D19F8366220802C1A /* Pods_Game2048.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +60,11 @@
 		5DA541001FC54C1900EE4E9E /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
 		5DA541021FC5594900EE4E9E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		5DA541041FC55CE700EE4E9E /* CellNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
+		5DB2A95D1FEB8421006C2436 /* AdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsManager.swift; sourceTree = "<group>"; };
 		5DF91B971FC80B5100F30A12 /* MatrixNodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixNodeManager.swift; sourceTree = "<group>"; };
+		96164496CE388E1260482F64 /* Pods-Game2048.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Game2048.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Game2048/Pods-Game2048.debug.xcconfig"; sourceTree = "<group>"; };
+		A0D2999921F14295FC754827 /* Pods-Game2048.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Game2048.release.xcconfig"; path = "Pods/Target Support Files/Pods-Game2048/Pods-Game2048.release.xcconfig"; sourceTree = "<group>"; };
+		B35B110D19F8366220802C1A /* Pods_Game2048.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Game2048.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E4FB1ED3FAB58E369F7FEF2 /* Pods_Game2048.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +93,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15011EC12AA322BD546AAB02 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				96164496CE388E1260482F64 /* Pods-Game2048.debug.xcconfig */,
+				A0D2999921F14295FC754827 /* Pods-Game2048.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		5D8D876F1FC41BF700F8C518 = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +109,8 @@
 				5D8D87951FC41BF700F8C518 /* Game2048Tests */,
 				5D8D87A01FC41BF700F8C518 /* Game2048UITests */,
 				5D8D87791FC41BF700F8C518 /* Products */,
+				15011EC12AA322BD546AAB02 /* Pods */,
+				B6B96AE3604A2153AB75DE39 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,10 +127,11 @@
 		5D8D877A1FC41BF700F8C518 /* Game2048 */ = {
 			isa = PBXGroup;
 			children = (
+				5DB2A95B1FEB83D6006C2436 /* Common */,
 				5DA540FA1FC523B800EE4E9E /* Game */,
 				5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */,
-				5D8D87831FC41BF700F8C518 /* GameViewController.swift */,
 				5DA541021FC5594900EE4E9E /* Constant.swift */,
+				5D8D87831FC41BF700F8C518 /* GameViewController.swift */,
 				5D8D87851FC41BF700F8C518 /* Main.storyboard */,
 				5D8D87881FC41BF700F8C518 /* Assets.xcassets */,
 				5D8D878A1FC41BF700F8C518 /* LaunchScreen.storyboard */,
@@ -175,6 +194,30 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		5DB2A95B1FEB83D6006C2436 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				5DB2A95C1FEB83D6006C2436 /* Manager */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		5DB2A95C1FEB83D6006C2436 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				5DB2A95D1FEB8421006C2436 /* AdsManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		B6B96AE3604A2153AB75DE39 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B35B110D19F8366220802C1A /* Pods_Game2048.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -182,9 +225,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5D8D87A61FC41BF700F8C518 /* Build configuration list for PBXNativeTarget "Game2048" */;
 			buildPhases = (
+				BE28CD49306891F51D44EC89 /* [CP] Check Pods Manifest.lock */,
 				5D8D87741FC41BF700F8C518 /* Sources */,
 				5D8D87751FC41BF700F8C518 /* Frameworks */,
 				5D8D87761FC41BF700F8C518 /* Resources */,
+				2CBBE8DBB6BF5347C0F2855C /* [CP] Embed Pods Frameworks */,
+				8C7A76844DB37B1D6D6A6203 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -304,6 +350,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2CBBE8DBB6BF5347C0F2855C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Game2048/Pods-Game2048-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C7A76844DB37B1D6D6A6203 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Game2048/Pods-Game2048-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BE28CD49306891F51D44EC89 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Game2048-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5D8D87741FC41BF700F8C518 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -313,6 +410,7 @@
 				5DA540FF1FC523C400EE4E9E /* GameDataManager.swift in Sources */,
 				5DA541031FC5594900EE4E9E /* Constant.swift in Sources */,
 				5DF91B981FC80B5100F30A12 /* MatrixNodeManager.swift in Sources */,
+				5DB2A95E1FEB8421006C2436 /* AdsManager.swift in Sources */,
 				5D8D877C1FC41BF700F8C518 /* AppDelegate.swift in Sources */,
 				5D4F2BBC1FCD361D0074AE50 /* SKButtonNode.swift in Sources */,
 				5DA541011FC54C1900EE4E9E /* CellModel.swift in Sources */,
@@ -480,6 +578,7 @@
 		};
 		5D8D87A71FC41BF700F8C518 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96164496CE388E1260482F64 /* Pods-Game2048.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -496,6 +595,7 @@
 		};
 		5D8D87A81FC41BF700F8C518 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0D2999921F14295FC754827 /* Pods-Game2048.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

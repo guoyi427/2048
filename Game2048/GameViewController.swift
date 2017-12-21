@@ -173,6 +173,11 @@ extension GameViewController {
             guard let weakSelf = self else { return }
             weakSelf._currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
             weakSelf._maxScoreLabel.text = "\(GameDataManager.shared.maxScore)"
+            
+            //  重新开始后 很抱歉 我要添加一个广告
+            AdsManager.instance.showInterstitial(viewController: weakSelf, complete: { (result) in
+                debugPrint("is leave app \(result)")
+            })
         }
         let cancelAtion = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let alert = UIAlertController(title: "重新开始", message: "将会删除现在的所有记录", preferredStyle: .alert)
