@@ -12,6 +12,7 @@ class MatrixNodeManager: NSObject {
     static let shared: MatrixNodeManager = MatrixNodeManager()
     
     fileprivate let Padding: CGFloat = 10.0
+    fileprivate let CellOffset_y: CGFloat = 2.0
     
     //  Data
     fileprivate var _cellNodeList: [[CellNode]] = [[],[],[],[],[],[]]
@@ -26,7 +27,10 @@ class MatrixNodeManager: NSObject {
     
     fileprivate func prepareChildNode() {
         
-        let cellWidth = ScreenWidth / GameDataManager.shared.size.width
+        let cellWidth = _matrixNode!.frame.width / GameDataManager.shared.size.width
+        let originX = _matrixNode!.frame.minX
+        let originY = _matrixNode!.frame.minY
+        let lineColor = SKColor.white
         
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
             let modelList = GameDataManager.shared.currentModelList[column]
@@ -37,11 +41,21 @@ class MatrixNodeManager: NSObject {
             _cellNodeList[column] = cellList
             
             //  添加网格分割线
-            let pathToLine = CGMutablePath()
-            pathToLine.move(to: CGPoint(x: cellWidth * CGFloat(column) + 1, y: 0))
-            pathToLine.addLine(to: CGPoint(x: cellWidth * CGFloat(column) + 1, y: _matrixNode!.frame.height))
-            let verLine = SKShapeNode(path: pathToLine)
-            _matrixNode?.addChild(verLine)
+            if column > 0 { //  少画一条分割线
+                let pathToVertical = CGMutablePath()
+                pathToVertical.move(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY))
+                pathToVertical.addLine(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY + _matrixNode!.frame.height))
+                let verLine = SKShapeNode(path: pathToVertical)
+                verLine.strokeColor = lineColor
+                _matrixNode!.addChild(verLine)
+                
+                let pathToHorizontal = CGMutablePath()
+                pathToHorizontal.move(to: CGPoint(x: originX, y: originY + cellWidth * CGFloat(column) - 1))
+                pathToHorizontal.addLine(to: CGPoint(x: originX + _matrixNode!.frame.width, y: originY + cellWidth * CGFloat(column) - 1))
+                let horLine = SKShapeNode(path: pathToHorizontal)
+                horLine.strokeColor = lineColor
+                _matrixNode!.addChild(horLine)
+            }
         }
         
         //  添加滑块儿
@@ -55,7 +69,7 @@ extension MatrixNodeManager {
     /// 移动单元格
     fileprivate func moveCellNode(column: Int, row: Int, node: CellNode) {
         let cellWidth = (ScreenWidth - Padding * 2) / GameDataManager.shared.size.width
-        let point = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column))
+        let point = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
         
         let removeNode = _cellNodeList[column][row]
         
@@ -81,7 +95,7 @@ extension MatrixNodeManager {
                 let tempModel = modelList[row]
                 if tempModel == model {
                     let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
-                    node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column))
+                    node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
                     _matrixNode!.addChild(node)
                     _cellNodeList[column][row] = node
                 }
@@ -102,8 +116,8 @@ extension MatrixNodeManager {
         
         _matrixNode = SKShapeNode(rect: rect, cornerRadius: CornerRadius_Cell)
         guard let newNode = _matrixNode else { return SKShapeNode() }
-        newNode.fillColor = SKColor.white
-        newNode.strokeColor = SKColor.white
+        newNode.fillColor = MatrixBackgroundColor
+        newNode.strokeColor = MatrixBackgroundColor
         prepareChildNode()
         
         return newNode
@@ -339,7 +353,7 @@ extension MatrixNodeManager {
             for row in 0...modelList.count - 1 {
                 let model = modelList[row]
                 let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
-                node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column))
+                node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
                 if model.number > 0 {
                     _matrixNode!.addChild(node)
                 }

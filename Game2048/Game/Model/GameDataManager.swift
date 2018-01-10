@@ -173,7 +173,7 @@ extension GameDataManager {
         //  更新成最后一组数据
         currentModelList = modelSet
         historyModelList.removeLast()
-        currentScore -= 100
+//        currentScore -= 100
     }
     
     /// 重新开始

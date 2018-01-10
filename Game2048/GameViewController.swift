@@ -16,10 +16,12 @@ class GameViewController: UIViewController {
     fileprivate let _scene = SKScene(size: ScreenSize)
     fileprivate let _currentScoreLabel = SKLabelNode(text: "0")
     fileprivate let _maxScoreLabel = SKLabelNode(text: "0")
+    fileprivate var _undoButton: SKButtonNode!
     
     //  Data
     /// 记录保存前的滑动次数 （每执行50次 自动保存一次，除此之外退到后台会自动保存一次）
     fileprivate var _swipeCountBeforeSave: Int = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +53,7 @@ extension GameViewController {
     /// 准备游戏场景
     fileprivate func prepareScene(view: SKView) {
         _scene.scaleMode = .aspectFill
-        _scene.backgroundColor = SKColor.lightGray
+        _scene.backgroundColor = SKColor.white
         view.presentScene(_scene)
         
         //  准备 四个方向的手势
@@ -66,6 +68,8 @@ extension GameViewController {
     fileprivate func prepareHeadNode() {
         let height_headNode: CGFloat = 150
         let headNode = SKShapeNode(rect: CGRect(x: 0, y: ScreenHeight - height_headNode, width: ScreenWidth, height: height_headNode), cornerRadius: 0)
+//        let headNode = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "gameHeadBG")), size: CGSize(width: ScreenWidth, height: height_headNode))
+//        headNode.position = CGPoint(x: ScreenWidth/2, y: ScreenHeight-height_headNode/2)
         headNode.fillColor = YellowColor
         _scene.addChild(headNode)
         
@@ -90,11 +94,14 @@ extension GameViewController {
         currentView.addChild(_currentScoreLabel)
         
         //  撤销按钮
-        let undoButton = SKButtonNode(rect: CGRect(x: currentView.frame.minX, y: currentView.frame.minY - 50, width: currentView.frame.width, height: 35), cornerRadius: 3)
-        undoButton.fillColor = BrownColor
-        undoButton.updateTitle(text: "撤销")
-        undoButton.addTarget(target: self, selector: #selector(undoButtonAction(sender:)))
-        headNode.addChild(undoButton)
+        _undoButton = SKButtonNode(rect: CGRect(x: currentView.frame.minX, y: currentView.frame.minY - 50, width: currentView.frame.width, height: 35), cornerRadius: 3)
+        _undoButton.fillColor = BrownColor
+        _undoButton.updateTitle(text: "撤销（\(UndoMaxCount)）")
+        _undoButton.addTarget(target: self, selector: #selector(undoButtonAction(sender:)))
+        headNode.addChild(_undoButton)
+        //  获取当前可撤销次数
+        let undoCount = UserDefaults.standard.value(forKey: kUserDefault_UndoCount) as? Int ?? 0
+        _undoButton.updateTitle(text: "撤销（\(undoCount)）")
         
         //  最大分数
         let maxView = SKShapeNode(rect: CGRect(x: currentView.frame.minX - 20 - width_score, y: currentView.frame.minY, width: width_score, height: height_score))
@@ -120,6 +127,20 @@ extension GameViewController {
         restartButton.updateTitle(text: "重新开始")
         restartButton.addTarget(target: self, selector: #selector(restartButtonAction(sender:)))
         headNode.addChild(restartButton)
+        
+        //  分享按钮
+        let shareButton = SKButtonNode(rect: CGRect(x: 10, y: maxView.frame.minY - 50, width: maxView.frame.minX - 20, height: 35), cornerRadius: 3)
+        shareButton.fillColor = BrownColor
+        shareButton.updateTitle(text: "分享")
+        shareButton.addTarget(target: self, selector: #selector(shareButtonAction(sender:)))
+        headNode.addChild(shareButton)
+        
+        //  菜单
+        let menuButton = SKButtonNode(rect: CGRect(x: 10, y: maxView.frame.minY, width: maxView.frame.minX - 20, height: maxView.frame.height), cornerRadius: 3)
+        menuButton.fillColor = YellowColor
+        menuButton.updateTitle(text: "菜单")
+        menuButton.addTarget(target: self, selector: #selector(menuButtonAction(sender:)))
+        headNode.addChild(menuButton)
     }
     
     /// 准备矩阵视图
@@ -159,10 +180,47 @@ extension GameViewController {
  
     /// 撤销按钮 返回上一步
     @objc fileprivate func undoButtonAction(sender: SKButtonNode) {
-        GameDataManager.shared.undo()
-        //  刷新页面
-        MatrixNodeManager.shared.upload()
-        _currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
+        //  判断是否有可用次数   一共三次，用光之后弹出广告赠送三次
+        if let count = UserDefaults.standard.value(forKey: kUserDefault_UndoCount) as? Int, count > 0 {
+            //  还有可用次数
+            UserDefaults.standard.setValue(count - 1, forKey: kUserDefault_UndoCount)
+            UserDefaults.standard.synchronize()
+            
+            //  更新撤销按钮的剩余次数
+            _undoButton.updateTitle(text: "撤销（\(count - 1)）")
+            
+            //  开始撤销
+            GameDataManager.shared.undo()
+            //  刷新页面
+            MatrixNodeManager.shared.upload()
+            _currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
+            
+        } else {
+            //  无可用次数 弹出广告前的提示框
+            let doneAction = UIAlertAction(title: "确定", style: .default, handler: { (action) in
+                
+                AdsManager.instance.showInterstitial(viewController: self, complete: { [weak self] (result) in
+                    if result {
+                        //  更新撤销按钮的剩余次数
+                        UserDefaults.standard.setValue(UndoMaxCount, forKey: kUserDefault_UndoCount)
+                        UserDefaults.standard.synchronize()
+                        
+                        self!._undoButton.updateTitle(text: "撤销（\(UndoMaxCount)）")
+                    } else {
+                        //  跳转广告失败
+                        let knowAction = UIAlertAction(title: "知道了", style: .default, handler: nil)
+                        let notClickAlert = UIAlertController(title: "您没有点击广告", message: "请点击广告跳转到浏览器后直接返回即可", preferredStyle: .alert)
+                        notClickAlert.addAction(knowAction)
+                        self!.present(notClickAlert, animated: true, completion: nil)
+                    }
+                })
+            })
+            let cancelAction = UIAlertAction(title: "不需要", style: .cancel, handler: nil)
+            let alertController = UIAlertController(title: "您的撤销次数已用光", message: "麻烦您点击广告跳转，可获得三次撤销机会，感谢", preferredStyle: .alert)
+            alertController.addAction(doneAction)
+            alertController.addAction(cancelAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 
     /// 重新开始
@@ -184,5 +242,28 @@ extension GameViewController {
         alert.addAction(doneAction)
         alert.addAction(cancelAtion)
         present(alert, animated: true, completion: nil)
+    }
+    
+    /// 分享按钮
+    @objc fileprivate func shareButtonAction(sender: SKButtonNode) {
+        let wechatAction = UIAlertAction(title: "微信朋友", style: .default) { (action) in
+            
+        }
+        let pengYouQuanAction = UIAlertAction(title: "微信朋友圈", style: .default) { (action) in
+            
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+            
+        }
+        let actionSheet = UIAlertController(title: "分享", message: "炫耀一下吧", preferredStyle: .actionSheet)
+        actionSheet.addAction(wechatAction)
+        actionSheet.addAction(pengYouQuanAction)
+        actionSheet.addAction(cancelAction)
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    /// 菜单按钮
+    @objc fileprivate func menuButtonAction(sender: SKButtonNode) {
+        
     }
 }
