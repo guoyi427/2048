@@ -1,16 +1,22 @@
 PODS:
   - Google-Mobile-Ads-SDK (7.31.0)
+  - SQLite.swift (0.11.5):
+    - SQLite.swift/standard (= 0.11.5)
+  - SQLite.swift/standard (0.11.5)
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
+  - SQLite.swift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Google-Mobile-Ads-SDK
+    - SQLite.swift
 
 SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
+  SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
 
-PODFILE CHECKSUM: 9dad9786b7a2be6f4cce7cb73952ece20862ad88
+PODFILE CHECKSUM: 05f3499188e5a884170f6ede40f34be256f835bb
 
 COCOAPODS: 1.5.2

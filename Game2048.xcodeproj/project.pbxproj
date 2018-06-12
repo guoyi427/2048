@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B2C46A520CF719900B05096 /* History.db in Resources */ = {isa = PBXBuildFile; fileRef = 5B2C46A420CF719900B05096 /* History.db */; };
+		5B2C46A720CF73F900B05096 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2C46A620CF73F900B05096 /* HistoryManager.swift */; };
 		5D4F2BBC1FCD361D0074AE50 /* SKButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F2BBB1FCD361D0074AE50 /* SKButtonNode.swift */; };
 		5D8D877C1FC41BF700F8C518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */; };
 		5D8D87841FC41BF700F8C518 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D87831FC41BF700F8C518 /* GameViewController.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		5B2C46A420CF719900B05096 /* History.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = History.db; sourceTree = "<group>"; };
+		5B2C46A620CF73F900B05096 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
 		5D4F2BBB1FCD361D0074AE50 /* SKButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKButtonNode.swift; sourceTree = "<group>"; };
 		5D8D87781FC41BF700F8C518 /* Game2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				5DA540FE1FC523C400EE4E9E /* GameDataManager.swift */,
 				5DA541001FC54C1900EE4E9E /* CellModel.swift */,
+				5B2C46A620CF73F900B05096 /* HistoryManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				5D8D87741FC41BF700F8C518 /* Sources */,
 				5D8D87751FC41BF700F8C518 /* Frameworks */,
 				5D8D87761FC41BF700F8C518 /* Resources */,
+				07D4690D3E4833B9DCD2657E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -353,6 +357,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		07D4690D3E4833B9DCD2657E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Game2048/Pods-Game2048-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Game2048/Pods-Game2048-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BE28CD49306891F51D44EC89 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -382,6 +404,7 @@
 				5DA540FF1FC523C400EE4E9E /* GameDataManager.swift in Sources */,
 				5DA541031FC5594900EE4E9E /* Constant.swift in Sources */,
 				5DF91B981FC80B5100F30A12 /* MatrixNodeManager.swift in Sources */,
+				5B2C46A720CF73F900B05096 /* HistoryManager.swift in Sources */,
 				5DB2A95E1FEB8421006C2436 /* AdsManager.swift in Sources */,
 				5D8D877C1FC41BF700F8C518 /* AppDelegate.swift in Sources */,
 				5D4F2BBC1FCD361D0074AE50 /* SKButtonNode.swift in Sources */,
