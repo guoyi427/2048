@@ -70,7 +70,7 @@ extension GameDataManager {
     
     /// 保存数据到缓存中
     func saveModelList() {
-        //  将记录保存到本地
+        //  将记录保存到缓存
         var sectionList: [[Int]] = []
         GameDataManager.shared.currentModelList.forEach({ (list) in
             var numberList: [Int] = []
@@ -91,6 +91,7 @@ extension GameDataManager {
             var saveList:[[[Int]]] = []
             var list = historyModelList
             
+            //  最多只保存9次历史记录
             for _ in 0...9 {
                 if list.count > 0 {
                     saveList.insert(list.last!, at: 0)
