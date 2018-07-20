@@ -13,7 +13,6 @@
 		5D8D877C1FC41BF700F8C518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */; };
 		5D8D87841FC41BF700F8C518 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D87831FC41BF700F8C518 /* GameViewController.swift */; };
 		5D8D87871FC41BF700F8C518 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87851FC41BF700F8C518 /* Main.storyboard */; };
-		5D8D87891FC41BF700F8C518 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D87881FC41BF700F8C518 /* Assets.xcassets */; };
 		5D8D878C1FC41BF700F8C518 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8D878A1FC41BF700F8C518 /* LaunchScreen.storyboard */; };
 		5D8D87971FC41BF700F8C518 /* Game2048Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D87961FC41BF700F8C518 /* Game2048Tests.swift */; };
 		5D8D87A21FC41BF700F8C518 /* Game2048UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D87A11FC41BF700F8C518 /* Game2048UITests.swift */; };
@@ -51,7 +50,6 @@
 		5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D8D87831FC41BF700F8C518 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		5D8D87861FC41BF700F8C518 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5D8D87881FC41BF700F8C518 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D8D878B1FC41BF700F8C518 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D8D878D1FC41BF700F8C518 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D8D87921FC41BF700F8C518 /* Game2048Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Game2048Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +135,6 @@
 				5DA541021FC5594900EE4E9E /* Constant.swift */,
 				5D8D87831FC41BF700F8C518 /* GameViewController.swift */,
 				5D8D87851FC41BF700F8C518 /* Main.storyboard */,
-				5D8D87881FC41BF700F8C518 /* Assets.xcassets */,
 				5D8D878A1FC41BF700F8C518 /* LaunchScreen.storyboard */,
 				5D8D878D1FC41BF700F8C518 /* Info.plist */,
 				5B2C46A420CF719900B05096 /* History.db */,
@@ -335,7 +332,6 @@
 			files = (
 				5B2C46A520CF719900B05096 /* History.db in Resources */,
 				5D8D87871FC41BF700F8C518 /* Main.storyboard in Resources */,
-				5D8D87891FC41BF700F8C518 /* Assets.xcassets in Resources */,
 				5D8D878C1FC41BF700F8C518 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

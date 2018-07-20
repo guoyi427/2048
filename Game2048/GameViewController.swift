@@ -18,6 +18,9 @@ class GameViewController: UIViewController {
     fileprivate let _maxScoreLabel = SKLabelNode(text: "0")
     fileprivate var _undoButton: SKButtonNode!
     
+    fileprivate let height_headNode: CGFloat = 150 + Constant.topArea
+
+    
     //  Data
     /// 记录保存前的滑动次数 （每执行50次 自动保存一次，除此之外退到后台会自动保存一次）
     fileprivate var _swipeCountBeforeSave: Int = 0
@@ -34,8 +37,8 @@ class GameViewController: UIViewController {
             prepareMatrixNode()
             
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
+//            view.showsFPS = true
+//            view.showsNodeCount = true
         }
         
         uploadView()
@@ -49,7 +52,6 @@ class GameViewController: UIViewController {
 
 // MARK: - Prepare
 extension GameViewController {
-    
     /// 准备游戏场景
     fileprivate func prepareScene(view: SKView) {
         _scene.scaleMode = .aspectFill
@@ -66,28 +68,26 @@ extension GameViewController {
     }
     
     fileprivate func prepareHeadNode() {
-        let height_headNode: CGFloat = 150
         let headNode = SKShapeNode(rect: CGRect(x: 0, y: ScreenHeight - height_headNode, width: ScreenWidth, height: height_headNode), cornerRadius: 0)
-//        let headNode = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "gameHeadBG")), size: CGSize(width: ScreenWidth, height: height_headNode))
-//        headNode.position = CGPoint(x: ScreenWidth/2, y: ScreenHeight-height_headNode/2)
         headNode.fillColor = YellowColor
         _scene.addChild(headNode)
         
-        let width_score: CGFloat = 120
+        let width_score: CGFloat = ScreenWidth / 3 - 20
         let height_score: CGFloat = 50
         
         //  当前分数
-        let currentView = SKShapeNode(rect: CGRect(x: ScreenWidth - width_score - 20, y: ScreenHeight - height_score - 20, width: width_score, height: height_score))
+        let currentView = SKShapeNode(rect: CGRect(x: ScreenWidth - width_score - 20, y: ScreenHeight - height_score - Constant.topArea - 20, width: width_score, height: height_score))
         currentView.fillColor = SKColor.white
         headNode.addChild(currentView)
         
         let currentTitleLabel = SKLabelNode(text: "当前分数")
-        currentTitleLabel.fontColor = SKColor.black
+        currentTitleLabel.fontColor = BlackColor
         currentTitleLabel.fontSize = 12
         currentTitleLabel.position = CGPoint(x: currentView.frame.minX + width_score/2, y: currentView.frame.minY + height_score/2 + 10)
+        
         currentView.addChild(currentTitleLabel)
         
-        _currentScoreLabel.fontColor = SKColor.black
+        _currentScoreLabel.fontColor = BlackColor
         _currentScoreLabel.fontSize = 14
         _currentScoreLabel.fontName = TitleFontName
         _currentScoreLabel.position = CGPoint(x: currentView.frame.minX + width_score/2, y: currentView.frame.minY + height_score/2 - 10)
@@ -95,7 +95,7 @@ extension GameViewController {
         
         //  撤销按钮
         _undoButton = SKButtonNode(rect: CGRect(x: currentView.frame.minX, y: currentView.frame.minY - 50, width: currentView.frame.width, height: 35), cornerRadius: 3)
-        _undoButton.fillColor = BrownColor
+        _undoButton.fillColor = HeadButtonColor
         _undoButton.updateTitle(text: "撤销（\(UndoMaxCount)）")
         _undoButton.addTarget(target: self, selector: #selector(undoButtonAction(sender:)))
         headNode.addChild(_undoButton)
@@ -109,12 +109,12 @@ extension GameViewController {
         headNode.addChild(maxView)
         
         let maxTitleLabel = SKLabelNode(text: "最大分数")
-        maxTitleLabel.fontColor = SKColor.black
+        maxTitleLabel.fontColor = BlackColor
         maxTitleLabel.fontSize = 12
         maxTitleLabel.position = CGPoint(x: maxView.frame.minX + width_score/2, y: maxView.frame.minY + height_score/2 + 10)
         maxView.addChild(maxTitleLabel)
         
-        _maxScoreLabel.fontColor = SKColor.black
+        _maxScoreLabel.fontColor = BlackColor
         _maxScoreLabel.fontSize = 14
         _maxScoreLabel.fontName = TitleFontName
         _maxScoreLabel.position = CGPoint(x: maxView.frame.minX + width_score/2, y: maxView.frame.minY + height_score/2 - 10)
@@ -123,21 +123,21 @@ extension GameViewController {
         //  重新开始按钮
         let restartButton = SKButtonNode(rect: CGRect(x: maxView.frame.minX, y: maxView.frame.minY - 50, width: maxView.frame.width, height: 35),
                                          cornerRadius: 3)
-        restartButton.fillColor = BrownColor
+        restartButton.fillColor = HeadButtonColor
         restartButton.updateTitle(text: "重新开始")
         restartButton.addTarget(target: self, selector: #selector(restartButtonAction(sender:)))
         headNode.addChild(restartButton)
         
         //  分享按钮
         let shareButton = SKButtonNode(rect: CGRect(x: 10, y: maxView.frame.minY - 50, width: maxView.frame.minX - 20, height: 35), cornerRadius: 3)
-        shareButton.fillColor = BrownColor
+        shareButton.fillColor = HeadButtonColor
         shareButton.updateTitle(text: "分享")
         shareButton.addTarget(target: self, selector: #selector(shareButtonAction(sender:)))
         headNode.addChild(shareButton)
         
         //  菜单
         let menuButton = SKButtonNode(rect: CGRect(x: 10, y: maxView.frame.minY, width: maxView.frame.minX - 20, height: maxView.frame.height), cornerRadius: 3)
-        menuButton.fillColor = YellowColor
+        menuButton.fillColor = HeadMenuColor
         menuButton.updateTitle(text: "菜单")
         menuButton.addTarget(target: self, selector: #selector(menuButtonAction(sender:)))
         headNode.addChild(menuButton)
@@ -145,7 +145,9 @@ extension GameViewController {
     
     /// 准备矩阵视图
     fileprivate func prepareMatrixNode() {
-        let matrixNode = MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: 10, y: 60, width: ScreenWidth - 20, height: ScreenWidth - 20))
+        let matrixNode =
+            MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: 10, y: ScreenHeight - ScreenWidth - height_headNode - 40,
+                                     width: ScreenWidth - 20, height: ScreenWidth - 20))
         _scene.addChild(matrixNode)
     }
 }
