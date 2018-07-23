@@ -25,7 +25,7 @@ class CellNode: SKNode {
         addChild(_backgroundNode!)
         
         _labelNode.fontColor = BlackColor
-        _labelNode.fontSize = 30
+        _labelNode.fontSize = 14
         _labelNode.fontName = TitleFontName
         _labelNode.verticalAlignmentMode = .center
         _labelNode.position = CGPoint(x: _backgroundNode!.frame.midX, y: _backgroundNode!.frame.midY)
@@ -101,7 +101,7 @@ extension CellNode {
         
         //  更新label的字号
         let count = _labelNode.text!.count
-        let fontSize = (_cellWidth + 20)/CGFloat(count)
+        let fontSize = (_cellWidth)/CGFloat(count)
         _labelNode.fontSize = CGFloat(fontSize)
         //  更新背景颜色
         updateColor(number: number)

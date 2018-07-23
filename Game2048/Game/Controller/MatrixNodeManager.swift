@@ -12,7 +12,7 @@ class MatrixNodeManager: NSObject {
     static let shared: MatrixNodeManager = MatrixNodeManager()
     
     fileprivate let Padding: CGFloat = 10.0
-    fileprivate let CellOffset_y: CGFloat = 2.0
+    fileprivate let CellOffset_y: CGFloat = 0
     
     //  Data
     fileprivate var _cellNodeList: [[CellNode]] = [[],[],[],[],[],[]]
@@ -26,7 +26,7 @@ class MatrixNodeManager: NSObject {
     }
     
     fileprivate func prepareChildNode() {
-        
+        /// 格子外圈尺寸
         let cellWidth = _matrixNode!.frame.width / GameDataManager.shared.size.width
         let originX = _matrixNode!.frame.minX
         let originY = _matrixNode!.frame.minY
@@ -68,7 +68,7 @@ class MatrixNodeManager: NSObject {
 extension MatrixNodeManager {
     /// 移动单元格
     fileprivate func moveCellNode(column: Int, row: Int, node: CellNode) {
-        let cellWidth = (ScreenWidth - Padding * 2) / GameDataManager.shared.size.width
+        let cellWidth = Constant.queryCellWidth(backgroundWidth: ScreenWidth - Padding * 2)
         let point = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
         
         let removeNode = _cellNodeList[column][row]
@@ -87,7 +87,7 @@ extension MatrixNodeManager {
     
     /// 根据model 添加一个cellNode
     fileprivate func addCellNode(model: CellModel) {
-        let cellWidth = (ScreenWidth - Padding * 2) / GameDataManager.shared.size.width
+        let cellWidth = Constant.queryCellWidth(backgroundWidth: ScreenWidth - Padding * 2)
         
         for column in 0...GameDataManager.shared.currentModelList.count-1 {
             let modelList = GameDataManager.shared.currentModelList[column]
@@ -344,7 +344,7 @@ extension MatrixNodeManager {
         _cellNodeList.removeAll()
         _cellNodeList = [[],[],[],[],[],[]]
         
-        let cellWidth = (ScreenWidth - Padding * 2) / GameDataManager.shared.size.width
+        let cellWidth = Constant.queryCellWidth(backgroundWidth: ScreenWidth - Padding * 2)
         
         //  创建新的
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
