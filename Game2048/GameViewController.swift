@@ -55,7 +55,7 @@ extension GameViewController {
     /// 准备游戏场景
     fileprivate func prepareScene(view: SKView) {
         _scene.scaleMode = .aspectFill
-        _scene.backgroundColor = SKColor.white
+        _scene.backgroundColor = BackgroundColor
         view.presentScene(_scene)
         
         //  准备 四个方向的手势
@@ -68,8 +68,9 @@ extension GameViewController {
     }
     
     fileprivate func prepareHeadNode() {
-        let headNode = SKShapeNode(rect: CGRect(x: 0, y: ScreenHeight - height_headNode, width: ScreenWidth, height: height_headNode), cornerRadius: 0)
-        headNode.fillColor = YellowColor
+        let headNode = SKShapeNode(rect: CGRect(x: 0, y: ScreenHeight - height_headNode, width: ScreenWidth, height: height_headNode))
+        headNode.lineWidth = 0
+        headNode.fillColor = BackgroundColor
         _scene.addChild(headNode)
         
         let width_score: CGFloat = ScreenWidth / 3 - 20
@@ -77,17 +78,17 @@ extension GameViewController {
         
         //  当前分数
         let currentView = SKShapeNode(rect: CGRect(x: ScreenWidth - width_score - 20, y: ScreenHeight - height_score - Constant.topArea - 20, width: width_score, height: height_score))
-        currentView.fillColor = SKColor.white
+        currentView.fillColor = ScoreLabelColor
         headNode.addChild(currentView)
         
         let currentTitleLabel = SKLabelNode(text: "当前分数")
-        currentTitleLabel.fontColor = BlackColor
+        currentTitleLabel.fontColor = SKColor.white
         currentTitleLabel.fontSize = 12
         currentTitleLabel.position = CGPoint(x: currentView.frame.minX + width_score/2, y: currentView.frame.minY + height_score/2 + 10)
         
         currentView.addChild(currentTitleLabel)
         
-        _currentScoreLabel.fontColor = BlackColor
+        _currentScoreLabel.fontColor = SKColor.white
         _currentScoreLabel.fontSize = 14
         _currentScoreLabel.fontName = TitleFontName
         _currentScoreLabel.position = CGPoint(x: currentView.frame.minX + width_score/2, y: currentView.frame.minY + height_score/2 - 10)
@@ -105,16 +106,16 @@ extension GameViewController {
         
         //  最大分数
         let maxView = SKShapeNode(rect: CGRect(x: currentView.frame.minX - 20 - width_score, y: currentView.frame.minY, width: width_score, height: height_score))
-        maxView.fillColor = SKColor.white
+        maxView.fillColor = ScoreLabelColor
         headNode.addChild(maxView)
         
         let maxTitleLabel = SKLabelNode(text: "最大分数")
-        maxTitleLabel.fontColor = BlackColor
+        maxTitleLabel.fontColor = SKColor.white
         maxTitleLabel.fontSize = 12
         maxTitleLabel.position = CGPoint(x: maxView.frame.minX + width_score/2, y: maxView.frame.minY + height_score/2 + 10)
         maxView.addChild(maxTitleLabel)
         
-        _maxScoreLabel.fontColor = BlackColor
+        _maxScoreLabel.fontColor = SKColor.white
         _maxScoreLabel.fontSize = 14
         _maxScoreLabel.fontName = TitleFontName
         _maxScoreLabel.position = CGPoint(x: maxView.frame.minX + width_score/2, y: maxView.frame.minY + height_score/2 - 10)
@@ -146,7 +147,7 @@ extension GameViewController {
     /// 准备矩阵视图
     fileprivate func prepareMatrixNode() {
         let matrixNode =
-            MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: 10, y: ScreenHeight - ScreenWidth - height_headNode - 40,
+            MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: 10, y: ScreenHeight - ScreenWidth - height_headNode,
                                      width: ScreenWidth - 20, height: ScreenWidth - 20))
         _scene.addChild(matrixNode)
     }

@@ -37,6 +37,7 @@ class SKButtonNode: SKShapeNode {
     
     func updateTitle(text: String) {
         _titleLabel.text = text
+        _titleLabel.fontName = TitleFontName
         _titleLabel.position = CGPoint(x: position.x + frame.midX, y: position.y + frame.midY)
     }
 }
