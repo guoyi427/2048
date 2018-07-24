@@ -27,7 +27,7 @@ class MatrixNodeManager: NSObject {
     
     fileprivate func prepareChildNode() {
         /// 格子外圈尺寸
-        let cellWidth = _matrixNode!.frame.width / GameDataManager.shared.size.width
+        let cellWidth = _matrixNode!.frame.width / CGFloat(GameDataManager.shared.size)
         let originX = _matrixNode!.frame.minX
         let originY = _matrixNode!.frame.minY
         let lineColor = SKColor.white

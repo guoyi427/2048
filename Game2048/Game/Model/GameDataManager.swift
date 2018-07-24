@@ -15,12 +15,12 @@ class GameDataManager: NSObject {
     static let shared: GameDataManager = GameDataManager()
     
     /// 默认尺寸 6x6 用于限制2048的规格
-    var size = CGSize(width: 6, height: 6)
+    var size = 6
     
     /// cell显示的文字数组，根据cell.number作为数组下标获取cell对应的文字
-    var titleList: [String] = {
+    lazy var titleList: [String] = {
         var list: [String] = []
-        for i in 1...36 {
+        for i in 1...size * size {
             let number = pow(2, i)
             let string = "\(number)"
             list.append(string)
@@ -29,11 +29,11 @@ class GameDataManager: NSObject {
     }()
     
     /// 当前所有cell的二维数组，包含number=0的model
-    var currentModelList: [[CellModel]] = {
+    lazy var currentModelList: [[CellModel]] = {
         var list: [[CellModel]] = []
-        for column in 0...5 {
+        for column in 0...size-1 {
             var modelList: [CellModel] = []
-            for row in 0...5 {
+            for row in 0...size-1 {
                 let model = CellModel(number: 0)
                 modelList.append(model)
             }
