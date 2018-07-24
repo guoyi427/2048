@@ -30,8 +30,6 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            view.backgroundColor = UIColor.white
-            
             prepareScene(view: view)
             prepareHeadNode()
             prepareMatrixNode()
@@ -46,7 +44,7 @@ class GameViewController: UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 }
 
@@ -75,10 +73,22 @@ extension GameViewController {
         
         let width_score: CGFloat = ScreenWidth / 3 - 20
         let height_score: CGFloat = 50
+        let height_button: CGFloat = 35
         let cornerRadius: CGFloat = 5
+        let padding: CGFloat = 10
+        
+        //  撤销按钮
+        _undoButton = SKButtonNode(rect: CGRect(x: ScreenWidth - width_score - padding, y: headNode.frame.minY, width: width_score, height: height_button), cornerRadius: cornerRadius)
+        _undoButton.fillColor = HeadButtonColor
+        _undoButton.updateTitle(text: "撤销（\(UndoMaxCount)）")
+        _undoButton.addTarget(target: self, selector: #selector(undoButtonAction(sender:)))
+        headNode.addChild(_undoButton)
+        //  获取当前可撤销次数
+        let undoCount = UserDefaults.standard.value(forKey: kUserDefault_UndoCount) as? Int ?? 0
+        _undoButton.updateTitle(text: "撤销（\(undoCount)）")
         
         //  当前分数
-        let currentView = SKShapeNode(rect: CGRect(x: ScreenWidth - width_score - 20, y: ScreenHeight - height_score - Constant.topArea - 20, width: width_score, height: height_score), cornerRadius: cornerRadius)
+        let currentView = SKShapeNode(rect: CGRect(x: _undoButton.frame.minX, y: _undoButton.frame.maxY + padding, width: _undoButton.frame.width, height: height_score), cornerRadius: cornerRadius)
         currentView.fillColor = ScoreLabelColor
         headNode.addChild(currentView)
         
@@ -95,18 +105,8 @@ extension GameViewController {
         _currentScoreLabel.position = CGPoint(x: currentView.frame.minX + width_score/2, y: currentView.frame.minY + height_score/2 - 10)
         currentView.addChild(_currentScoreLabel)
         
-        //  撤销按钮
-        _undoButton = SKButtonNode(rect: CGRect(x: currentView.frame.minX, y: currentView.frame.minY - 50, width: currentView.frame.width, height: 35), cornerRadius: cornerRadius)
-        _undoButton.fillColor = HeadButtonColor
-        _undoButton.updateTitle(text: "撤销（\(UndoMaxCount)）")
-        _undoButton.addTarget(target: self, selector: #selector(undoButtonAction(sender:)))
-        headNode.addChild(_undoButton)
-        //  获取当前可撤销次数
-        let undoCount = UserDefaults.standard.value(forKey: kUserDefault_UndoCount) as? Int ?? 0
-        _undoButton.updateTitle(text: "撤销（\(undoCount)）")
-        
         //  最大分数
-        let maxView = SKShapeNode(rect: CGRect(x: currentView.frame.minX - 20 - width_score, y: currentView.frame.minY, width: width_score, height: height_score), cornerRadius: cornerRadius)
+        let maxView = SKShapeNode(rect: CGRect(x: currentView.frame.minX - padding - width_score, y: currentView.frame.minY, width: width_score, height: height_score), cornerRadius: cornerRadius)
         maxView.fillColor = ScoreLabelColor
         headNode.addChild(maxView)
         
@@ -123,21 +123,21 @@ extension GameViewController {
         maxView.addChild(_maxScoreLabel)
         
         //  重新开始按钮
-        let restartButton = SKButtonNode(rect: CGRect(x: maxView.frame.minX, y: maxView.frame.minY - 50, width: maxView.frame.width, height: 35), cornerRadius: cornerRadius)
+        let restartButton = SKButtonNode(rect: CGRect(x: maxView.frame.minX, y: _undoButton.frame.minY, width: maxView.frame.width, height: _undoButton.frame.height), cornerRadius: cornerRadius)
         restartButton.fillColor = HeadButtonColor
         restartButton.updateTitle(text: "重新开始")
         restartButton.addTarget(target: self, selector: #selector(restartButtonAction(sender:)))
         headNode.addChild(restartButton)
         
         //  分享按钮
-        let shareButton = SKButtonNode(rect: CGRect(x: 10, y: maxView.frame.minY - 50, width: maxView.frame.minX - 20, height: 35), cornerRadius: cornerRadius)
+        let shareButton = SKButtonNode(rect: CGRect(x: padding, y: _undoButton.frame.minY, width: maxView.frame.minX - padding * 2, height: height_button), cornerRadius: cornerRadius)
         shareButton.fillColor = HeadButtonColor
         shareButton.updateTitle(text: "分享")
         shareButton.addTarget(target: self, selector: #selector(shareButtonAction(sender:)))
         headNode.addChild(shareButton)
         
         //  菜单
-        let menuButton = SKButtonNode(rect: CGRect(x: 10, y: maxView.frame.minY, width: maxView.frame.minX - 20, height: maxView.frame.height), cornerRadius: cornerRadius)
+        let menuButton = SKButtonNode(rect: CGRect(x: padding, y: maxView.frame.minY, width: maxView.frame.minX - padding * 2, height: maxView.frame.height), cornerRadius: cornerRadius)
         menuButton.fillColor = HeadMenuColor
         menuButton.updateTitle(text: "菜单")
         menuButton.addTarget(target: self, selector: #selector(menuButtonAction(sender:)))
@@ -146,9 +146,12 @@ extension GameViewController {
     
     /// 准备矩阵视图
     fileprivate func prepareMatrixNode() {
+        let padding: CGFloat = 10
+        let width_matrix: CGFloat = ScreenWidth - padding * 2
+        let height_matrix: CGFloat = width_matrix
+        
         let matrixNode =
-            MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: 10, y: ScreenHeight - ScreenWidth - height_headNode,
-                                     width: ScreenWidth - 20, height: ScreenWidth - 20))
+            MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: padding, y: (ScreenHeight - height_headNode - height_matrix)/2, width: width_matrix, height: height_matrix))
         _scene.addChild(matrixNode)
     }
 }
