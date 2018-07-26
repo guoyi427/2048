@@ -31,9 +31,7 @@ let kUserDefault_UndoCount = "kUserDefault_UndoCount"
 
 class Constant: NSObject {
     static let topArea: CGFloat = ScreenHeight == 812 ? 44 : 0
-    
-    
-    
+ 
     static let cellPadding: CGFloat = 5
     static func queryCellWidth(backgroundWidth: CGFloat) -> CGFloat {
         return backgroundWidth / CGFloat(GameDataManager.shared.size)// - Constant.cellPadding * 2

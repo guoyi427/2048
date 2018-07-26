@@ -16,6 +16,7 @@ class MatrixNodeManager: NSObject {
     
     //  Data
     fileprivate var _cellNodeList: [[CellNode]] = [[],[],[],[],[],[]]
+    fileprivate var _separateLineList: [SKShapeNode] = []
     
     //  UI
     fileprivate var _matrixNode: SKShapeNode?
@@ -48,6 +49,7 @@ class MatrixNodeManager: NSObject {
                 let verLine = SKShapeNode(path: pathToVertical)
                 verLine.strokeColor = lineColor
                 _matrixNode!.addChild(verLine)
+                _separateLineList.append(verLine)
                 
                 let pathToHorizontal = CGMutablePath()
                 pathToHorizontal.move(to: CGPoint(x: originX, y: originY + cellWidth * CGFloat(column) - 1))
@@ -55,6 +57,7 @@ class MatrixNodeManager: NSObject {
                 let horLine = SKShapeNode(path: pathToHorizontal)
                 horLine.strokeColor = lineColor
                 _matrixNode!.addChild(horLine)
+                _separateLineList.append(horLine)
             }
         }
         
@@ -341,10 +344,18 @@ extension MatrixNodeManager {
                 node.removeFromParent()
             }
         }
-        _cellNodeList.removeAll()
-        _cellNodeList = [[],[],[],[],[],[]]
+        _cellNodeList = [[],[],[],[],[],[],[],[]]
+        
+        for separateLine in _separateLineList {
+            separateLine.removeFromParent()
+        }
+        _separateLineList = []
+        
         
         let cellWidth = Constant.queryCellWidth(backgroundWidth: ScreenWidth - Padding * 2)
+        let originX = _matrixNode!.frame.minX
+        let originY = _matrixNode!.frame.minY
+        let lineColor = SKColor.white
         
         //  创建新的
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
@@ -358,6 +369,25 @@ extension MatrixNodeManager {
                     _matrixNode!.addChild(node)
                 }
                 cellList.append(node)
+                
+                //  添加网格分割线
+                if column > 0 { //  少画一条分割线
+                    let pathToVertical = CGMutablePath()
+                    pathToVertical.move(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY))
+                    pathToVertical.addLine(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY + _matrixNode!.frame.height))
+                    let verLine = SKShapeNode(path: pathToVertical)
+                    verLine.strokeColor = lineColor
+                    _matrixNode!.addChild(verLine)
+                    _separateLineList.append(verLine)
+                    
+                    let pathToHorizontal = CGMutablePath()
+                    pathToHorizontal.move(to: CGPoint(x: originX, y: originY + cellWidth * CGFloat(column) - 1))
+                    pathToHorizontal.addLine(to: CGPoint(x: originX + _matrixNode!.frame.width, y: originY + cellWidth * CGFloat(column) - 1))
+                    let horLine = SKShapeNode(path: pathToHorizontal)
+                    horLine.strokeColor = lineColor
+                    _matrixNode!.addChild(horLine)
+                    _separateLineList.append(horLine)
+                }
             }
             _cellNodeList[column] = cellList
         }

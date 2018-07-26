@@ -270,6 +270,12 @@ extension GameViewController {
     
     /// 菜单按钮
     @objc fileprivate func menuButtonAction(sender: SKButtonNode) {
-        
+        let menu = MenuView { (index) in
+            GameDataManager.shared.saveToFile()
+            //  切换规格
+            GameDataManager.shared.size = 4 + index * 2
+            self.uploadView()
+        }
+        view.addSubview(menu)
     }
 }

@@ -72,7 +72,7 @@ extension GameDataManager {
     func saveModelList() {
         //  将记录保存到缓存
         var sectionList: [[Int]] = []
-        GameDataManager.shared.currentModelList.forEach({ (list) in
+        currentModelList.forEach({ (list) in
             var numberList: [Int] = []
             list.forEach({ (model) in
                 numberList.append(model.number)
@@ -105,7 +105,12 @@ extension GameDataManager {
             if path == nil {
                 return
             }
-            path!.append("/history.archive")
+            if size == 6 {
+                path!.append("/history.archive")
+            } else {
+                path!.append("/history\(size).archive")
+            }
+            
             NSKeyedArchiver.archiveRootObject(saveList, toFile: path!)
         }
         //  保存分数
@@ -118,13 +123,16 @@ extension GameDataManager {
     
     /// 查询历史
     func queryHistory() {
-        var path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
-        if path == nil {
-            return
-        }
-        path!.append("/history.archive")
+        guard let n_path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return }
+        var path = n_path
         
-        if let data = NSKeyedUnarchiver.unarchiveObject(withFile: path!) as? [[[Int]]] {
+        if size == 6 {
+            path.append("/history.archive")
+        } else {
+            path.append("/history\(size).archive")
+        }
+        
+        if let data = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [[[Int]]], data.count != 0 {
             historyModelList = data
             debugPrint(historyModelList)
             
@@ -142,6 +150,9 @@ extension GameDataManager {
                     currentModelList = sectionList
                 }
             }
+        } else {
+            //  本地不存在
+            restart()
         }
         //  获取当前分数 和 最大分数
         if let score = UserDefaults.standard.value(forKey: Key_CurrentScore) as? Int  {
@@ -182,9 +193,9 @@ extension GameDataManager {
         currentModelList.removeAll()
         historyModelList.removeAll()
         currentScore = 0
-        for _ in 0...5 {
+        for _ in 0...size-1 {
             var modelList: [CellModel] = []
-            for _ in 0...5 {
+            for _ in 0...size-1 {
                 let model = CellModel(number: 0)
                 modelList.append(model)
             }

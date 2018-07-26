@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B2C46A520CF719900B05096 /* History.db in Resources */ = {isa = PBXBuildFile; fileRef = 5B2C46A420CF719900B05096 /* History.db */; };
 		5B2C46A720CF73F900B05096 /* HistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2C46A620CF73F900B05096 /* HistoryManager.swift */; };
+		5B5561352109B856003CC469 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5561342109B856003CC469 /* MenuView.swift */; };
 		5D4F2BBC1FCD361D0074AE50 /* SKButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4F2BBB1FCD361D0074AE50 /* SKButtonNode.swift */; };
 		5D8D877C1FC41BF700F8C518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */; };
 		5D8D87841FC41BF700F8C518 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8D87831FC41BF700F8C518 /* GameViewController.swift */; };
@@ -46,6 +47,7 @@
 		5B2C46A420CF719900B05096 /* History.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = History.db; sourceTree = "<group>"; };
 		5B2C46A620CF73F900B05096 /* HistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryManager.swift; sourceTree = "<group>"; };
 		5B456B872105F022007F1FD0 /* Game2048-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Game2048-Bridging-Header.h"; sourceTree = "<group>"; };
+		5B5561342109B856003CC469 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		5D4F2BBB1FCD361D0074AE50 /* SKButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKButtonNode.swift; sourceTree = "<group>"; };
 		5D8D87781FC41BF700F8C518 /* Game2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D8D877B1FC41BF700F8C518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			children = (
 				5DA541041FC55CE700EE4E9E /* CellNode.swift */,
 				5D4F2BBB1FCD361D0074AE50 /* SKButtonNode.swift */,
+				5B5561342109B856003CC469 /* MenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -364,10 +367,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Game2048/Pods-Game2048-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SQLite.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -400,6 +405,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D8D87841FC41BF700F8C518 /* GameViewController.swift in Sources */,
+				5B5561352109B856003CC469 /* MenuView.swift in Sources */,
 				5DA540FF1FC523C400EE4E9E /* GameDataManager.swift in Sources */,
 				5DA541031FC5594900EE4E9E /* Constant.swift in Sources */,
 				5DF91B981FC80B5100F30A12 /* MatrixNodeManager.swift in Sources */,
