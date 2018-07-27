@@ -20,7 +20,7 @@ class CellNode: SKNode {
     
     init(number: Int, size: CGSize) {
         super.init()
-        
+        zPosition = 10
         _cellWidth = size.width
         _backgroundNode = SKShapeNode(rectOf: size, cornerRadius: CornerRadius_Cell)
         _backgroundNode!.position = CGPoint(x: size.width/2, y: size.height/2)

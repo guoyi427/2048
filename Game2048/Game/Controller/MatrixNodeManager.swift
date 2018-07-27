@@ -362,14 +362,6 @@ extension MatrixNodeManager {
             let modelList = GameDataManager.shared.currentModelList[column]
             var cellList: [CellNode] = []
             for row in 0...modelList.count - 1 {
-                let model = modelList[row]
-                let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
-                node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
-                if model.number > 0 {
-                    _matrixNode!.addChild(node)
-                }
-                cellList.append(node)
-                
                 //  添加网格分割线
                 if column > 0 { //  少画一条分割线
                     let pathToVertical = CGMutablePath()
@@ -388,6 +380,14 @@ extension MatrixNodeManager {
                     _matrixNode!.addChild(horLine)
                     _separateLineList.append(horLine)
                 }
+                
+                let model = modelList[row]
+                let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
+                node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
+                if model.number > 0 {
+                    _matrixNode!.addChild(node)
+                }
+                cellList.append(node)
             }
             _cellNodeList[column] = cellList
         }
