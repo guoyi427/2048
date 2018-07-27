@@ -19,6 +19,9 @@ class MenuView: UIView {
     }
     */
     
+    let contentView = UIView(frame: CGRect.zero)
+
+    
     var buttonClick: (_ index: Int) -> Void
     
 
@@ -27,14 +30,14 @@ class MenuView: UIView {
         super.init(frame: UIScreen.main.bounds)
         backgroundColor = UIColor.black.withAlphaComponent(0.2)
         
-        let contentView = UIView(frame: CGRect.zero)
-        contentView.backgroundColor = HeadMenuColor
+        contentView.backgroundColor = BackgroundColor
+        contentView.layer.cornerRadius = CornerRadius
         addSubview(contentView)
         contentView.snp.makeConstraints { (make) in
             make.left.equalTo(40)
             make.right.equalTo(-40)
-            make.top.equalTo(150)
-            make.bottom.equalTo(-150)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(230)
         }
         
         let titles:[String] = ["4x4", "6x6", "8x8"]
@@ -45,8 +48,11 @@ class MenuView: UIView {
             btn.backgroundColor = HeadButtonColor
             btn.frame = CGRect(x: 10, y: 10 + i * 60, width: Int(frame.width - 100), height: 50)
             btn.tag = 200 + i
+            btn.layer.cornerRadius = CornerRadius
             contentView.addSubview(btn)
         }
+        
+        prepareAboutMe()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,6 +61,30 @@ class MenuView: UIView {
     
     deinit {
         print(#function)
+    }
+    
+    fileprivate func prepareAboutMe() {
+        let qqLabel = UILabel(frame: CGRect.zero)
+        qqLabel.text = "QQ群:"
+        qqLabel.textColor = GrayTextColor
+        qqLabel.font = UIFont.systemFont(ofSize: 14)
+        contentView.addSubview(qqLabel)
+        
+        let qqNumberLabel = UILabel(frame: CGRect.zero)
+        qqNumberLabel.text = "21770500"
+        qqNumberLabel.textColor = BlackTextColor
+        qqNumberLabel.font = UIFont.systemFont(ofSize: 16)
+        contentView.addSubview(qqNumberLabel)
+        
+        qqLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(10)
+            make.bottom.equalTo(-10)
+        }
+        
+        qqNumberLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(qqLabel.snp.right).offset(10)
+            make.bottom.equalTo(qqLabel)
+        }
     }
 }
 

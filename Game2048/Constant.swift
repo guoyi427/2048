@@ -25,9 +25,15 @@ let ScoreLabelColor = #colorLiteral(red: 0.7176470588, green: 0.6705882353, blue
 
 let MatrixBackgroundColor = #colorLiteral(red: 0.7921568627, green: 0.7450980392, blue: 0.7058823529, alpha: 1)
 
+let GrayTextColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+let BlackTextColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+
+
 let TitleFontName = "AvenirNext-Bold"
 
 let kUserDefault_UndoCount = "kUserDefault_UndoCount"
+
+let CornerRadius: CGFloat = 5
 
 class Constant: NSObject {
     static let topArea: CGFloat = ScreenHeight == 812 ? 44 : 0
