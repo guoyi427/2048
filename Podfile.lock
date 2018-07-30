@@ -8,6 +8,11 @@ PODS:
     - UMCCommon
   - UMCCommon (1.5.2)
   - UMCSecurityPlugins (1.0.6)
+  - UMCShare/Core (6.9.3):
+    - UMCCommon
+  - UMCShare/Social/ReducedWeChat (6.9.3):
+    - UMCCommon
+    - UMCShare/Core
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
@@ -16,6 +21,7 @@ DEPENDENCIES:
   - UMCAnalytics
   - UMCCommon
   - UMCSecurityPlugins
+  - UMCShare/Social/ReducedWeChat
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -25,6 +31,7 @@ SPEC REPOS:
     - UMCAnalytics
     - UMCCommon
     - UMCSecurityPlugins
+    - UMCShare
 
 SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
@@ -33,7 +40,8 @@ SPEC CHECKSUMS:
   UMCAnalytics: 4667788559a72f2fa5077117d1b8802a3b6eb6bb
   UMCCommon: 4392868ac47ff1b101663106bb114ba616fabbad
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
+  UMCShare: 023886b10d11119331c9c46d8e8a0c31fe67c23e
 
-PODFILE CHECKSUM: 6a84b48df1dded617a55220017df2772be5e6707
+PODFILE CHECKSUM: ade8683b7845481830dd4f232b3f16451c61d452
 
 COCOAPODS: 1.5.3

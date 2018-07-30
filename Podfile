@@ -10,5 +10,5 @@ target 'Game2048' do
     pod 'UMCCommon'
     pod 'UMCAnalytics'
     pod 'UMCSecurityPlugins'
-    
+    pod 'UMCShare/Social/ReducedWeChat'
 end
