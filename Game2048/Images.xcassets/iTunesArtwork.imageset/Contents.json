@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "IMG_1931.PNG",
+      "filename" : "iTunesArtwork.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "iTunesArtwork@2x.png",
       "scale" : "2x"
     },
     {

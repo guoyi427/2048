@@ -170,7 +170,7 @@ extension GameViewController {
     fileprivate func share(type: UMSocialPlatformType) {
         guard let shareImage = CommonToolManager.screenShot(scene: _scene) else { return }
         let messageObject = UMSocialMessageObject.init()
-        let shareObject = UMShareImageObject.shareObject(withTitle: "abc", descr: "123", thumImage: #imageLiteral(resourceName: "shareIcon"))
+        let shareObject = UMShareImageObject.shareObject(withTitle: "abc", descr: "123", thumImage: #imageLiteral(resourceName: "iTunesArtwork"))
         shareObject?.shareImage = shareImage
         messageObject.shareObject = shareObject
         UMSocialManager.default().share(to: type, messageObject: messageObject, currentViewController: self) { (data, error) in
