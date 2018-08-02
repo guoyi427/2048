@@ -40,6 +40,6 @@ class Constant: NSObject {
  
     static let cellPadding: CGFloat = 5
     static func queryCellWidth(backgroundWidth: CGFloat) -> CGFloat {
-        return backgroundWidth / CGFloat(GameDataManager.shared.size)// - Constant.cellPadding * 2
+        return CGFloat(Int(backgroundWidth / CGFloat(GameDataManager.shared.size)))
     }
 }

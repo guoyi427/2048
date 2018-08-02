@@ -28,7 +28,7 @@ class MatrixNodeManager: NSObject {
     
     fileprivate func prepareChildNode() {
         /// 格子外圈尺寸
-        let cellWidth = _matrixNode!.frame.width / CGFloat(GameDataManager.shared.size)
+        let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
         let originX = _matrixNode!.frame.minX
         let originY = _matrixNode!.frame.minY
         let lineColor = SKColor.white
@@ -71,7 +71,7 @@ class MatrixNodeManager: NSObject {
 extension MatrixNodeManager {
     /// 移动单元格
     fileprivate func moveCellNode(column: Int, row: Int, node: CellNode) {
-        let cellWidth = Constant.queryCellWidth(backgroundWidth: ScreenWidth - Padding * 2)
+        let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
         let point = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
         
         let removeNode = _cellNodeList[column][row]
@@ -90,7 +90,7 @@ extension MatrixNodeManager {
     
     /// 根据model 添加一个cellNode
     fileprivate func addCellNode(model: CellModel) {
-        let cellWidth = Constant.queryCellWidth(backgroundWidth: ScreenWidth - Padding * 2)
+        let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
         
         for column in 0...GameDataManager.shared.currentModelList.count-1 {
             let modelList = GameDataManager.shared.currentModelList[column]
@@ -352,7 +352,7 @@ extension MatrixNodeManager {
         _separateLineList = []
         
         
-        let cellWidth = Constant.queryCellWidth(backgroundWidth: ScreenWidth - Padding * 2)
+        let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
         let originX = _matrixNode!.frame.minX
         let originY = _matrixNode!.frame.minY
         let lineColor = SKColor.white

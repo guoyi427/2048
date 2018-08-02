@@ -146,7 +146,8 @@ extension GameViewController {
     
     /// 准备矩阵视图
     fileprivate func prepareMatrixNode() {
-        let padding: CGFloat = 10
+        let cellWidth = Int(Constant.queryCellWidth(backgroundWidth: ScreenWidth - 20))
+        let padding: CGFloat = (ScreenWidth - CGFloat(cellWidth * GameDataManager.shared.size))/2
         let width_matrix: CGFloat = ScreenWidth - padding * 2
         let height_matrix: CGFloat = width_matrix
         
@@ -170,7 +171,7 @@ extension GameViewController {
     fileprivate func share(type: UMSocialPlatformType) {
         guard let shareImage = CommonToolManager.screenShot(scene: _scene) else { return }
         let messageObject = UMSocialMessageObject.init()
-        let shareObject = UMShareImageObject.shareObject(withTitle: "abc", descr: "123", thumImage: #imageLiteral(resourceName: "iTunesArtwork"))
+        let shareObject = UMShareImageObject.shareObject(withTitle: "2048", descr: "2048", thumImage: #imageLiteral(resourceName: "iTunesArtwork"))
         shareObject?.shareImage = shareImage
         messageObject.shareObject = shareObject
         UMSocialManager.default().share(to: type, messageObject: messageObject, currentViewController: self) { (data, error) in
