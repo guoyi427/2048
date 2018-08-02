@@ -165,6 +165,22 @@ extension GameViewController {
         _currentScoreLabel.text = "\(GameDataManager.shared.currentScore)"
         _maxScoreLabel.text = "\(GameDataManager.shared.maxScore)"
     }
+    
+    ///  分享
+    fileprivate func share(type: UMSocialPlatformType) {
+        guard let shareImage = CommonToolManager.screenShot(scene: _scene) else { return }
+        let messageObject = UMSocialMessageObject.init()
+        let shareObject = UMShareImageObject.shareObject(withTitle: "abc", descr: "123", thumImage: #imageLiteral(resourceName: "shareIcon"))
+        shareObject?.shareImage = shareImage
+        messageObject.shareObject = shareObject
+        UMSocialManager.default().share(to: type, messageObject: messageObject, currentViewController: self) { (data, error) in
+            if error != nil {
+                print("error share")
+            } else {
+                print("123")
+            }
+        }
+    }
 }
 
 // MARK: - GestureRecognizer & Button - Action
@@ -253,10 +269,10 @@ extension GameViewController {
     /// 分享按钮
     @objc fileprivate func shareButtonAction(sender: SKButtonNode) {
         let wechatAction = UIAlertAction(title: "微信朋友", style: .default) { (action) in
-            
+            self.share(type: .wechatSession)
         }
         let pengYouQuanAction = UIAlertAction(title: "微信朋友圈", style: .default) { (action) in
-            
+            self.share(type: .wechatTimeLine)
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
             
