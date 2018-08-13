@@ -17,7 +17,6 @@ class MatrixNodeManager: NSObject {
     
     //  Data
     fileprivate var _cellNodeList: [[CellNode]] = [[],[],[],[],[],[]]
-//    fileprivate var _separateLineList: [SKShapeNode] = []
     /// 占位图形
     fileprivate var _holderBoxList: [HolderBox] = []
     
@@ -32,41 +31,18 @@ class MatrixNodeManager: NSObject {
     fileprivate func prepareChildNode() {
         /// 格子外圈尺寸
         let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
-//        let originX = _matrixNode!.frame.minX
-//        let originY = _matrixNode!.frame.minY
-//        let lineColor = SKColor.white
         
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
             let modelList = GameDataManager.shared.currentModelList[column]
             var cellList: [CellNode] = []
             for row in 0...modelList.count - 1 {
                 cellList.append(CellNode(number: 0, size: CGSize.zero))
+                //  holder box
                 let box = HolderBox(row: row, column: column, size: CGSize(width: cellWidth, height: cellWidth), topY: _matrixNode!.frame.minY)
                 _matrixNode?.addChild(box)
                 _holderBoxList.append(box)
             }
             _cellNodeList[column] = cellList
-            
-            /*
-            //  添加网格分割线
-            if column > 0 { //  少画一条分割线
-                let pathToVertical = CGMutablePath()
-                pathToVertical.move(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY))
-                pathToVertical.addLine(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY + _matrixNode!.frame.height))
-                let verLine = SKShapeNode(path: pathToVertical)
-                verLine.strokeColor = lineColor
-                _matrixNode!.addChild(verLine)
-                _separateLineList.append(verLine)
-                
-                let pathToHorizontal = CGMutablePath()
-                pathToHorizontal.move(to: CGPoint(x: originX, y: originY + cellWidth * CGFloat(column) - 1))
-                pathToHorizontal.addLine(to: CGPoint(x: originX + _matrixNode!.frame.width, y: originY + cellWidth * CGFloat(column) - 1))
-                let horLine = SKShapeNode(path: pathToHorizontal)
-                horLine.strokeColor = lineColor
-                _matrixNode!.addChild(horLine)
-                _separateLineList.append(horLine)
-            }
-             */
         }
         
         //  添加滑块儿
@@ -354,42 +330,22 @@ extension MatrixNodeManager {
         }
         _cellNodeList = [[],[],[],[],[],[],[],[]]
         
-//        for separateLine in _separateLineList {
-//            separateLine.removeFromParent()
-//        }
-//        _separateLineList = []
-        
+        for holderBox in _holderBoxList {
+            holderBox.removeFromParent()
+        }
+        _holderBoxList = []
         
         let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
-//        let originX = _matrixNode!.frame.minX
-//        let originY = _matrixNode!.frame.minY
-//        let lineColor = SKColor.white
         
         //  创建新的
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
             let modelList = GameDataManager.shared.currentModelList[column]
             var cellList: [CellNode] = []
             for row in 0...modelList.count - 1 {
-                /*
-                //  添加网格分割线
-                if column > 0 { //  少画一条分割线
-                    let pathToVertical = CGMutablePath()
-                    pathToVertical.move(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY))
-                    pathToVertical.addLine(to: CGPoint(x: originX + cellWidth * CGFloat(column), y: originY + _matrixNode!.frame.height))
-                    let verLine = SKShapeNode(path: pathToVertical)
-                    verLine.strokeColor = lineColor
-                    _matrixNode!.addChild(verLine)
-                    _separateLineList.append(verLine)
-                    
-                    let pathToHorizontal = CGMutablePath()
-                    pathToHorizontal.move(to: CGPoint(x: originX, y: originY + cellWidth * CGFloat(column) - 1))
-                    pathToHorizontal.addLine(to: CGPoint(x: originX + _matrixNode!.frame.width, y: originY + cellWidth * CGFloat(column) - 1))
-                    let horLine = SKShapeNode(path: pathToHorizontal)
-                    horLine.strokeColor = lineColor
-                    _matrixNode!.addChild(horLine)
-                    _separateLineList.append(horLine)
-                }
-                */
+                //  holder box
+                let box = HolderBox(row: row, column: column, size: CGSize(width: cellWidth, height: cellWidth), topY: _matrixNode!.frame.minY)
+                _matrixNode?.addChild(box)
+                _holderBoxList.append(box)
                 
                 let model = modelList[row]
                 let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
