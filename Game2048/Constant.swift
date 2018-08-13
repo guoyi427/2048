@@ -22,8 +22,9 @@ let HeadButtonColor = #colorLiteral(red: 0.9254901961, green: 0.6, blue: 0.37647
 let HeadMenuColor = #colorLiteral(red: 0.9333333333, green: 0.7607843137, blue: 0.1725490196, alpha: 1)
 
 let ScoreLabelColor = #colorLiteral(red: 0.7176470588, green: 0.6705882353, blue: 0.6274509804, alpha: 1)
+let MatrixHolderBoxColor = #colorLiteral(red: 0.7921568627, green: 0.7450980392, blue: 0.7019607843, alpha: 1)
 
-let MatrixBackgroundColor = #colorLiteral(red: 0.7921568627, green: 0.7450980392, blue: 0.7058823529, alpha: 1)
+let MatrixBackgroundColor = #colorLiteral(red: 0.7254901961, green: 0.6745098039, blue: 0.6274509804, alpha: 1)
 
 let GrayTextColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
 let BlackTextColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)

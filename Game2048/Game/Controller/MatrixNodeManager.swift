@@ -8,15 +8,18 @@
 
 import SpriteKit
 
+let MatrixNodePadding: CGFloat = 10.0
+
 class MatrixNodeManager: NSObject {
     static let shared: MatrixNodeManager = MatrixNodeManager()
     
-    fileprivate let Padding: CGFloat = 10.0
     fileprivate let CellOffset_y: CGFloat = 0
     
     //  Data
     fileprivate var _cellNodeList: [[CellNode]] = [[],[],[],[],[],[]]
-    fileprivate var _separateLineList: [SKShapeNode] = []
+//    fileprivate var _separateLineList: [SKShapeNode] = []
+    /// 占位图形
+    fileprivate var _holderBoxList: [HolderBox] = []
     
     //  UI
     fileprivate var _matrixNode: SKShapeNode?
@@ -29,18 +32,22 @@ class MatrixNodeManager: NSObject {
     fileprivate func prepareChildNode() {
         /// 格子外圈尺寸
         let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
-        let originX = _matrixNode!.frame.minX
-        let originY = _matrixNode!.frame.minY
-        let lineColor = SKColor.white
+//        let originX = _matrixNode!.frame.minX
+//        let originY = _matrixNode!.frame.minY
+//        let lineColor = SKColor.white
         
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
             let modelList = GameDataManager.shared.currentModelList[column]
             var cellList: [CellNode] = []
-            for _ in 0...modelList.count - 1 {
+            for row in 0...modelList.count - 1 {
                 cellList.append(CellNode(number: 0, size: CGSize.zero))
+                let box = HolderBox(row: row, column: column, size: CGSize(width: cellWidth, height: cellWidth), topY: _matrixNode!.frame.minY)
+                _matrixNode?.addChild(box)
+                _holderBoxList.append(box)
             }
             _cellNodeList[column] = cellList
             
+            /*
             //  添加网格分割线
             if column > 0 { //  少画一条分割线
                 let pathToVertical = CGMutablePath()
@@ -59,6 +66,7 @@ class MatrixNodeManager: NSObject {
                 _matrixNode!.addChild(horLine)
                 _separateLineList.append(horLine)
             }
+             */
         }
         
         //  添加滑块儿
@@ -72,7 +80,7 @@ extension MatrixNodeManager {
     /// 移动单元格
     fileprivate func moveCellNode(column: Int, row: Int, node: CellNode) {
         let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
-        let point = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
+        let point = CGPoint(x: MatrixNodePadding + cellWidth * CGFloat(row) + CellPadding, y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y + CellPadding)
         
         let removeNode = _cellNodeList[column][row]
         
@@ -98,7 +106,7 @@ extension MatrixNodeManager {
                 let tempModel = modelList[row]
                 if tempModel == model {
                     let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
-                    node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
+                    node.position = CGPoint(x: MatrixNodePadding + cellWidth * CGFloat(row) + CellPadding, y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y + CellPadding)
                     _matrixNode!.addChild(node)
                     _cellNodeList[column][row] = node
                 }
@@ -346,22 +354,23 @@ extension MatrixNodeManager {
         }
         _cellNodeList = [[],[],[],[],[],[],[],[]]
         
-        for separateLine in _separateLineList {
-            separateLine.removeFromParent()
-        }
-        _separateLineList = []
+//        for separateLine in _separateLineList {
+//            separateLine.removeFromParent()
+//        }
+//        _separateLineList = []
         
         
         let cellWidth = Constant.queryCellWidth(backgroundWidth: _matrixNode!.frame.width)
-        let originX = _matrixNode!.frame.minX
-        let originY = _matrixNode!.frame.minY
-        let lineColor = SKColor.white
+//        let originX = _matrixNode!.frame.minX
+//        let originY = _matrixNode!.frame.minY
+//        let lineColor = SKColor.white
         
         //  创建新的
         for column in 0...GameDataManager.shared.currentModelList.count - 1 {
             let modelList = GameDataManager.shared.currentModelList[column]
             var cellList: [CellNode] = []
             for row in 0...modelList.count - 1 {
+                /*
                 //  添加网格分割线
                 if column > 0 { //  少画一条分割线
                     let pathToVertical = CGMutablePath()
@@ -380,10 +389,11 @@ extension MatrixNodeManager {
                     _matrixNode!.addChild(horLine)
                     _separateLineList.append(horLine)
                 }
+                */
                 
                 let model = modelList[row]
                 let node = CellNode(number: model.number, size: CGSize(width: cellWidth, height: cellWidth))
-                node.position = CGPoint(x: Padding + cellWidth * CGFloat(row), y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y)
+                node.position = CGPoint(x: MatrixNodePadding + cellWidth * CGFloat(row) + CellPadding, y: _matrixNode!.frame.minY + cellWidth * CGFloat(column) + CellOffset_y + CellPadding)
                 if model.number > 0 {
                     _matrixNode!.addChild(node)
                 }

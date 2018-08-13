@@ -9,6 +9,7 @@
 import SpriteKit
 
 let CornerRadius_Cell: CGFloat = 5
+let CellPadding: CGFloat = 5
 
 class CellNode: SKNode {
     
@@ -16,14 +17,17 @@ class CellNode: SKNode {
     fileprivate var _backgroundNode: SKShapeNode?
     fileprivate var _cellWidth: CGFloat = ScreenWidth / 6
     
+    
     fileprivate let _cellColors: [SKColor] = [#colorLiteral(red: 0.9333333333, green: 0.8941176471, blue: 0.8588235294, alpha: 1), #colorLiteral(red: 0.9294117647, green: 0.8784313725, blue: 0.7882352941, alpha: 1), #colorLiteral(red: 0.9450980392, green: 0.6941176471, blue: 0.4901960784, alpha: 1), #colorLiteral(red: 0.9176470588, green: 0.5529411765, blue: 0.3529411765, alpha: 1), #colorLiteral(red: 0.9568627451, green: 0.4862745098, blue: 0.3882352941, alpha: 1), #colorLiteral(red: 0.9098039216, green: 0.3529411765, blue: 0.2431372549, alpha: 1), #colorLiteral(red: 0.9490196078, green: 0.8431372549, blue: 0.4509803922, alpha: 1), #colorLiteral(red: 0.9411764706, green: 0.8117647059, blue: 0.3411764706, alpha: 1), #colorLiteral(red: 0.8901960784, green: 0.7490196078, blue: 0.2352941176, alpha: 1), #colorLiteral(red: 0.8588235294, green: 0.7176470588, blue: 0.231372549, alpha: 1), #colorLiteral(red: 0.8274509804, green: 0.6862745098, blue: 0.2274509804, alpha: 1)]
     
     init(number: Int, size: CGSize) {
         super.init()
         zPosition = 10
-        _cellWidth = size.width
-        _backgroundNode = SKShapeNode(rectOf: size, cornerRadius: CornerRadius_Cell)
-        _backgroundNode!.position = CGPoint(x: size.width/2, y: size.height/2)
+        let cellSize = CGSize(width: size.width - CellPadding * 2, height: size.height - CellPadding * 2)
+        _cellWidth = cellSize.width
+        
+        _backgroundNode = SKShapeNode(rectOf: cellSize, cornerRadius: CornerRadius_Cell)
+        _backgroundNode!.position = CGPoint(x: cellSize.width/2, y: cellSize.height/2)
         addChild(_backgroundNode!)
         
         _labelNode.fontColor = BlackColor
@@ -44,58 +48,16 @@ class CellNode: SKNode {
 extension CellNode {
     /// 更新颜色 根据number
     fileprivate func updateColor(number: Int) {
-        /*
-//        let colorCount = 36
-        /// 6个颜色分组，分别是 0红强， 1红绿强，2红弱绿，3绿蓝强，4绿弱蓝，5蓝红强，6蓝弱红
-        let colorSectionCount = 6
-        let colorSection = number / colorSectionCount
-        let colorGraduation = number % colorSectionCount
-        /// 颜色增量        颜色分组注释中  强为增， 弱为减
-        let colorAddValue = 150 * CGFloat(colorGraduation) / CGFloat(colorSectionCount) + 105
-        /// 颜色减量
-        let colorSubValue = 150 - 150 * CGFloat(colorGraduation) / CGFloat(colorSectionCount) + 105
-        
-        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0
-        switch colorSection {
-        case 0:
-            red = colorAddValue
-            break
-        case 1:
-            red = 255
-            green = colorAddValue
-            break
-        case 2:
-            green = 255
-            red = colorSubValue
-            break
-        case 3:
-            green = 255
-            blue = colorAddValue
-            break
-        case 4:
-            blue = 255
-            green = colorSubValue
-            break
-        case 5:
-            red = 255
-            blue = colorSubValue
-            break
-        default:
-            break
-        }
-        
-        let bgColor = SKColor(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1)
-        */
         var bgColor = HeadMenuColor
         if number <= _cellColors.count {
             bgColor = _cellColors[number - 1]
         }
         _backgroundNode!.fillColor = bgColor
-        
-//        let textColor = SKColor(red: (255-red)/255.0, green: (255-green)/255.0, blue: (255-blue)/255.0, alpha: 1)
+        _backgroundNode!.strokeColor = bgColor
+
         var textColor = SKColor.white
         if number <= 2 {
-            textColor = #colorLiteral(red: 0.5019607843, green: 0.4705882353, blue: 0.4392156863, alpha: 1)//BlackColor
+            textColor = #colorLiteral(red: 0.5019607843, green: 0.4705882353, blue: 0.4392156863, alpha: 1)
         }
         
         _labelNode.fontColor = textColor
