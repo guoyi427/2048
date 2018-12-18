@@ -57,7 +57,7 @@ extension GameViewController {
         view.presentScene(_scene)
         
         //  准备 四个方向的手势
-        let directions: [UISwipeGestureRecognizerDirection] = [.left, .right, .down, .up]
+        let directions: [UISwipeGestureRecognizer.Direction] = [.left, .right, .down, .up]
         for direction in directions {
             let swipeGR = UISwipeGestureRecognizer(target: self, action: #selector(swipeViewGestureRecognizerAction(sender:)))
             swipeGR.direction = direction
@@ -223,8 +223,14 @@ extension GameViewController {
         } else {
             //  无可用次数 弹出广告前的提示框
             let doneAction = UIAlertAction(title: "确定", style: .default, handler: { (action) in
+                //  菊花
+                let activityView = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
+                activityView.frame = CGRect(x: ScreenWidth/2 - 20, y: ScreenHeight/2 - 20, width: 40, height: 40)
+                activityView.startAnimating()
+                self.view.addSubview(activityView)
                 
                 AdsManager.instance.showInterstitial(viewController: self, complete: { [weak self] (result) in
+                    activityView.removeFromSuperview()
                     if result {
                         //  更新撤销按钮的剩余次数
                         UserDefaults.standard.setValue(1, forKey: kUserDefault_UndoCount)
@@ -234,7 +240,7 @@ extension GameViewController {
                     } else {
                         //  跳转广告失败
                         let knowAction = UIAlertAction(title: "知道了", style: .default, handler: nil)
-                        let notClickAlert = UIAlertController(title: "您没有点击广告", message: "请点击广告跳转到浏览器后直接返回即可", preferredStyle: .alert)
+                        let notClickAlert = UIAlertController(title: "您没有点击广告", message: "请点击广告跳转再返回即可", preferredStyle: .alert)
                         notClickAlert.addAction(knowAction)
                         self!.present(notClickAlert, animated: true, completion: nil)
                     }

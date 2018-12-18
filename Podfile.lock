@@ -1,16 +1,16 @@
 PODS:
-  - Google-Mobile-Ads-SDK (7.31.0)
-  - SnapKit (4.0.0)
+  - Google-Mobile-Ads-SDK (7.37.0)
+  - SnapKit (4.2.0)
   - SQLite.swift (0.11.5):
     - SQLite.swift/standard (= 0.11.5)
   - SQLite.swift/standard (0.11.5)
-  - UMCAnalytics (5.5.0):
+  - UMCAnalytics (5.5.2):
     - UMCCommon
-  - UMCCommon (1.5.2)
+  - UMCCommon (1.5.3)
   - UMCSecurityPlugins (1.0.6)
-  - UMCShare/Core (6.9.3):
+  - UMCShare/Core (6.9.5):
     - UMCCommon
-  - UMCShare/Social/ReducedWeChat (6.9.3):
+  - UMCShare/Social/ReducedWeChat (6.9.5):
     - UMCCommon
     - UMCShare/Core
 
@@ -34,13 +34,13 @@ SPEC REPOS:
     - UMCShare
 
 SPEC CHECKSUMS:
-  Google-Mobile-Ads-SDK: 6e529e748b45507a2ca904e0b5a52669ba3920c4
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  Google-Mobile-Ads-SDK: d028682d7450749a1955679da050eaf70d997b3e
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
-  UMCAnalytics: 4667788559a72f2fa5077117d1b8802a3b6eb6bb
-  UMCCommon: 4392868ac47ff1b101663106bb114ba616fabbad
+  UMCAnalytics: 6654fd3c8201ff6da5c86a3ae29cd5c8436d3b7b
+  UMCCommon: 016af43c0f769feb1ae1861d65aaf2b23b89c9c7
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
-  UMCShare: 023886b10d11119331c9c46d8e8a0c31fe67c23e
+  UMCShare: 552b29753f1b4da87b51d96545ed19e6263df397
 
 PODFILE CHECKSUM: ade8683b7845481830dd4f232b3f16451c61d452
 

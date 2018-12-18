@@ -33,6 +33,7 @@ class AdsManager: NSObject {
     }
     
     func showInterstitial(viewController: UIViewController, complete: @escaping (Bool) -> Void) {
+        //  加载广告
         loadAd()
         completeBlock = complete
         self.viewController = viewController

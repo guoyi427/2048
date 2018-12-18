@@ -111,7 +111,7 @@ extension MatrixNodeManager {
     }
     
     /// 手势处理方法，移动所有cell
-    func swipeGestureRecognizerAction(direction: UISwipeGestureRecognizerDirection) {
+    func swipeGestureRecognizerAction(direction: UISwipeGestureRecognizer.Direction) {
         var doSomething: Bool = false
         
         switch direction {
