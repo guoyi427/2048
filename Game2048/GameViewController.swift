@@ -80,7 +80,6 @@ extension GameViewController {
         //  撤销按钮
         _undoButton = SKButtonNode(rect: CGRect(x: ScreenWidth - width_score - padding, y: headNode.frame.minY, width: width_score, height: height_button), cornerRadius: cornerRadius)
         _undoButton.fillColor = HeadButtonColor
-        _undoButton.updateTitle(text: "撤销（\(UndoMaxCount)）")
         _undoButton.addTarget(target: self, selector: #selector(undoButtonAction(sender:)))
         headNode.addChild(_undoButton)
         //  获取当前可撤销次数
@@ -152,7 +151,10 @@ extension GameViewController {
         let height_matrix: CGFloat = width_matrix
         
         let matrixNode =
-            MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: padding, y: (ScreenHeight - height_headNode - height_matrix)/2, width: width_matrix, height: height_matrix))
+            MatrixNodeManager.shared.creatMatrixNode(rect: CGRect(x: padding - 1.5,
+                                                                  y: (ScreenHeight - height_headNode - height_matrix)/2,
+                                                                  width: width_matrix,
+                                                                  height: height_matrix))
         _scene.addChild(matrixNode)
     }
 }
@@ -225,10 +227,10 @@ extension GameViewController {
                 AdsManager.instance.showInterstitial(viewController: self, complete: { [weak self] (result) in
                     if result {
                         //  更新撤销按钮的剩余次数
-                        UserDefaults.standard.setValue(UndoMaxCount, forKey: kUserDefault_UndoCount)
+                        UserDefaults.standard.setValue(1, forKey: kUserDefault_UndoCount)
                         UserDefaults.standard.synchronize()
                         
-                        self!._undoButton.updateTitle(text: "撤销（\(UndoMaxCount)）")
+                        self!._undoButton.updateTitle(text: "撤销（\(1)）")
                     } else {
                         //  跳转广告失败
                         let knowAction = UIAlertAction(title: "知道了", style: .default, handler: nil)
@@ -239,7 +241,7 @@ extension GameViewController {
                 })
             })
             let cancelAction = UIAlertAction(title: "不需要", style: .cancel, handler: nil)
-            let alertController = UIAlertController(title: "您的撤销次数已用光", message: "麻烦您点击广告跳转，可获得三次撤销机会，感谢", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "您的撤销次数已用光", message: "麻烦您点击广告跳转，可获得一次撤销机会，感谢", preferredStyle: .alert)
             alertController.addAction(doneAction)
             alertController.addAction(cancelAction)
             self.present(alertController, animated: true, completion: nil)

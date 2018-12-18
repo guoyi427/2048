@@ -8,9 +8,6 @@
 
 import UIKit
 
-/// 撤销最大次数
-let UndoMaxCount: Int = 3
-
 let ScreenSize = UIScreen.main.bounds.size
 let ScreenWidth = UIScreen.main.bounds.width
 let ScreenHeight = UIScreen.main.bounds.height
