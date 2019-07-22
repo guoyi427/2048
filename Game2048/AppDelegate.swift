@@ -18,16 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         UMConfigure.initWithAppkey("55f8fe4de0f55a0ca400480c", channel: "App Store")
-        UMSocialManager.default().setPlaform(.wechatSession, appKey: "wx75fdaa951085d59e", appSecret: "188b8615405a97303c829b752171c572", redirectURL: "http://mobile.umeng.com/social")
+//        UMSocialManager.default().setPlaform(.wechatSession, appKey: "wx75fdaa951085d59e", appSecret: "188b8615405a97303c829b752171c572", redirectURL: "https://mobile.umeng.com/social")
     
         return true
     }
 
+    /*
     func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
         let result = UMSocialManager.default().handleOpen(url)
         return result
     }
-
-
+     */
 }
 

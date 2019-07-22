@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import Photos
 
 class GameViewController: UIViewController {
     
@@ -170,8 +171,10 @@ extension GameViewController {
     }
     
     ///  分享
-    fileprivate func share(type: UMSocialPlatformType) {
+    fileprivate func share() {
         guard let shareImage = CommonToolManager.screenShot(scene: _scene) else { return }
+        UIImageWriteToSavedPhotosAlbum(shareImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        /*
         let messageObject = UMSocialMessageObject.init()
         let shareObject = UMShareImageObject.shareObject(withTitle: "2048", descr: "2048", thumImage: #imageLiteral(resourceName: "iTunesArtwork"))
         shareObject?.shareImage = shareImage
@@ -182,6 +185,21 @@ extension GameViewController {
             } else {
                 print("123")
             }
+        }
+        */
+    }
+    
+    @objc
+    fileprivate func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            let ac = UIAlertController(title: "保存失败", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "好的", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "保存成功", message: "您的截图已经成功保存到相册中。", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "好的", style: .default))
+            present(ac, animated: true)
         }
     }
 }
@@ -277,18 +295,22 @@ extension GameViewController {
     
     /// 分享按钮
     @objc fileprivate func shareButtonAction(sender: SKButtonNode) {
-        let wechatAction = UIAlertAction(title: "微信朋友", style: .default) { (action) in
-            self.share(type: .wechatSession)
-        }
-        let pengYouQuanAction = UIAlertAction(title: "微信朋友圈", style: .default) { (action) in
-            self.share(type: .wechatTimeLine)
+//        let wechatAction = UIAlertAction(title: "微信朋友", style: .default) { (action) in
+//            self.share(type: .wechatSession)
+//        }
+//        let pengYouQuanAction = UIAlertAction(title: "微信朋友圈", style: .default) { (action) in
+//            self.share(type: .wechatTimeLine)
+//        }
+        let saveToAlbumAction = UIAlertAction(title: "保存到本地相册", style: .default) { (action) in
+            self.share()
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
             
         }
         let actionSheet = UIAlertController(title: "分享", message: "炫耀一下吧", preferredStyle: .actionSheet)
-        actionSheet.addAction(wechatAction)
-        actionSheet.addAction(pengYouQuanAction)
+//        actionSheet.addAction(wechatAction)
+//        actionSheet.addAction(pengYouQuanAction)
+        actionSheet.addAction(saveToAlbumAction)
         actionSheet.addAction(cancelAction)
         self.present(actionSheet, animated: true, completion: nil)
     }

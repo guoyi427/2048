@@ -20,7 +20,10 @@ class AdsManager: NSObject {
     
     override init() {
         super.init()
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-4042023740334492~2954900866")
+//        GADMobileAds.configure(withApplicationID: "ca-app-pub-4042023740334492~2954900866")
+        GADMobileAds.sharedInstance().start { (status) in
+            print("mobile ads init status = \(status.adapterStatusesByClassName)")
+        }
     }
     
     func loadAd() {
